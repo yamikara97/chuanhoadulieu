@@ -115,7 +115,7 @@ namespace Chuanhoafile.Controllers
                                             if (ws.Cells[rowInd, ngaythangnamsinh].Value == null || ws.Cells[rowInd, ngaythangnamsinh].Value.ToString() == "")
                                             {
                                                 errorlist += "Thiếu Ngày tháng năm sinh; ";
-                                                resultWorkSheet.Cells[resultRowIndex, 2].Value = "";
+                                                resultWorkSheet.Cells[resultRowIndex, 3].Value = "";
                                             }
                                             else
                                             {
@@ -157,7 +157,120 @@ namespace Chuanhoafile.Controllers
                                             }
                                             //////// col 4
 
+                                            if (ws.Cells[rowInd, manhom].Value == null || ws.Cells[rowInd, manhom].Value.ToString() == "")
+                                            {
+                                                errorlist += "Thiếu Mã nhóm; ";
+                                                resultWorkSheet.Cells[resultRowIndex, 5].Value = "";
+                                            }
+                                            else
+                                            {
+                                                int Ma;
+                                                if (int.TryParse(ws.Cells[rowInd, manhom].Value.ToString(), out Ma))
+                                                {
+                                                    resultWorkSheet.Cells[resultRowIndex, 5].Value = Ma.ToString();
+                                                }
+                                                else
+                                                {
+                                                    errorlist += "Mã nhóm sai định dạng; ";
+                                                    resultWorkSheet.Cells[resultRowIndex,5].Value = "";
+                                                }
+                                            }
+                                            //////// col 5
+                                            ///
+                                            if (ws.Cells[rowInd, donvi].Value == null || ws.Cells[rowInd, donvi].Value.ToString() == "")
+                                            {
+                                                errorlist += "Thiếu đơn vị công tác; ";
+                                                resultWorkSheet.Cells[resultRowIndex, 6].Value = "";
+                                            }
+                                            else
+                                            {
+                                                 resultWorkSheet.Cells[resultRowIndex, 6].Value = ws.Cells[rowInd, donvi].Value.ToString();
+    
+                                            }
+                                            //////// col 6
 
+                                            if (ws.Cells[rowInd, sodienthoai].Value == null || ws.Cells[rowInd, sodienthoai].Value.ToString() == "")
+                                            {
+                                                errorlist += "Thiếu số điện thoại; ";
+                                                resultWorkSheet.Cells[resultRowIndex, 7].Value = "";
+                                            }
+                                            else
+                                            {
+                                                string phonenum = ws.Cells[rowInd, sodienthoai].Value.ToString().Replace(" ","").Replace(".","").Replace("-","").Replace(" ", "").Trim();
+                                                if(phonenum.Length == 10 && phonenum[0] == '0')
+                                                {
+                                                    resultWorkSheet.Cells[resultRowIndex, 7].Value = phonenum;
+                                                }
+                                                else if (phonenum.Length == 11 && phonenum[0] == '8' && phonenum[1] == '4')
+                                                {
+                                                    resultWorkSheet.Cells[resultRowIndex, 7].Value = "0" + phonenum.Substring(2,10);
+                                                }
+                                                else if (phonenum.Length == 12 && phonenum[0] == '+' && phonenum[1] == '8' && phonenum[2] == '4')
+                                                {
+                                                    resultWorkSheet.Cells[resultRowIndex, 7].Value = "0" + phonenum.Substring(3, 10);
+                                                }
+                                                else
+                                                {
+                                                    errorlist += "Số điện thoại "+phonenum+" không hợp lệ; ";
+                                                    resultWorkSheet.Cells[resultRowIndex, 7].Value = "";
+                                                }
+                                            }
+                                            //////// col 7
+
+                                            if (ws.Cells[rowInd, cmnd].Value == null || ws.Cells[rowInd, cmnd].Value.ToString() == "")
+                                            {
+                                                errorlist += "Thiếu số điện thoại; ";
+                                                resultWorkSheet.Cells[resultRowIndex, 8].Value = "";
+                                            }
+                                            else
+                                            {
+                                                string cmndS = ws.Cells[rowInd, cmnd].Value.ToString().Replace(" ", "").Replace(".", "").Replace("-", "").Replace(" ", "").Trim();
+                                                if (cmndS.Length == 8 || cmndS.Length == 9 || cmndS.Length == 12)
+                                                {
+                                                    resultWorkSheet.Cells[resultRowIndex, 8].Value = cmndS;
+                                                }
+                                                else
+                                                {
+                                                    errorlist += "CMND/CCCD " + cmndS + " không hợp lệ; ";
+                                                    resultWorkSheet.Cells[resultRowIndex, 8].Value = "";
+                                                }
+                                            }
+                                            //////// col 8
+                                            ///
+                                            if (ws.Cells[rowInd, thebaohiem].Value == null || ws.Cells[rowInd, thebaohiem].Value.ToString() == "")
+                                            {
+                                                errorlist += "Thiếu mã thẻ Bảo hiểm; ";
+                                                resultWorkSheet.Cells[resultRowIndex, 9].Value = "";
+                                            }
+                                            else
+                                            {
+                                                string bhyt = ws.Cells[rowInd, thebaohiem].Value.ToString().Replace(" ", "").Replace(".", "").Replace("-", "").Replace(" ", "").Trim();
+                                                if (bhyt.Length == 10 || bhyt.Length == 15 )
+                                                {
+                                                    resultWorkSheet.Cells[resultRowIndex, 9].Value = bhyt;
+                                                }
+                                                else
+                                                {
+                                                    errorlist += "Mã thẻ BHYT " + bhyt + "số ký tự: " + bhyt.Length + " không hợp lệ; ";
+                                                    resultWorkSheet.Cells[resultRowIndex, 9].Value = "";
+                                                }
+                                            }
+                                            //////// col 9
+
+
+
+                                            if (ws.Cells[rowInd, diachi].Value == null || ws.Cells[rowInd, diachi].Value.ToString() == "")
+                                            {
+                                                errorlist += "Thiếu địa chỉ chi tiết; ";
+                                                resultWorkSheet.Cells[resultRowIndex, 16].Value = "";
+                                            }
+                                            else
+                                            {
+                                                resultWorkSheet.Cells[resultRowIndex, 16].Value = ws.Cells[rowInd, diachi].Value.ToString();
+
+                                            }
+                                            //////// col 16
+                                            ///
                                             resultWorkSheet.Cells[resultRowIndex, 18].Value = errorlist;
                                             resultRowIndex++;
                                             count++;
