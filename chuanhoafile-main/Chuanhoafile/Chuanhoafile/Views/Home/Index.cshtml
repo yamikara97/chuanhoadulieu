@@ -1,0 +1,47 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+
+}
+<div class="container action-begins">
+    <div class="loading">
+        <div class="spinner-border"></div>
+    </div>
+    <div class="bg-danger error">
+        <i class="fas fa-close"></i>
+        <span class="p-3 text-white" id="error"></span>
+    </div>
+    <form action="FileExecute" method="post" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-12">
+                <h3 class="text-danger text-center">Hệ thống chuẩn hóa file hỗ trợ nhập liệu</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="file-upload-wrapper col-md-7">
+                <label class="control-label font-weight-bold text-primary">Chọn hoặc thả file muốn chuẩn hóa vào vùng dưới</label>
+                <input id="input-b9" name="inputb9" data-browse-on-zone-click="true" type="file">
+            </div>
+            <div class="col-md-5">
+                <label class="control-label font-weight-bold text-primary">Chọn số thứ tự của dòng dữ liệu đầu tiên</label>
+                <select class="form-control" id="rowIndex" name="rowIndex">
+                    @{ for (int i = 1; i < 10; i++)
+                       {
+                           <option value="@i">Dòng @i</option>
+                       } 
+                    }
+                </select>
+                <hr />
+                <button id="uploadfile" data-save="modal" class="btn btn-success"  >Xử lý | <i class="fas  fa-upload"></i></button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="modal fade" id="Execute-Modal">
+               @{await Html.RenderPartialAsync("ExecutePartial"); }
+            </div>
+        </div>
+    </form>
+</div>
+@section Scripts
+{
+    @{await Html.RenderPartialAsync("_ModalScriptInit");}
+}
