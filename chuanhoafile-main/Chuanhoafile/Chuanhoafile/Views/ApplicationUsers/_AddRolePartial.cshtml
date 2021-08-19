@@ -1,0 +1,38 @@
+﻿<div class="modal fade" id="Add-role-model" tabindex="-1" role="dialog" aria-labelledby="Add-role-model-label" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body form-horizontal">
+                <form method="post" asp-action="AddRole" enctype="multipart/form-data">
+                    <input type="hidden" name="Id" value="@ViewBag.UserID" />
+                    <div class="form-group">
+                        <label localize-content>Chọn quyền cho tài khoản</label>
+                        <select class="form-control" name="Role">
+                            @if (ViewBag.Roles != null)
+                            {
+                                foreach (var item in ViewBag.Roles)
+                                {
+                                    if (item.Name != "Admin")
+                                    {
+                                        <option value="@item.Id"><localize>@item.Name</localize></option>
+                                    }
+                                    if (item.Name == "Admin" && User.IsInRole("Admin"))
+                                    {
+                                        <option value="@item.Id"><localize>@item.Name</localize></option>
+                                    }
+                                }
+                            }
+                        </select>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <button localize-content type="button" class="btn btn-secondary col-2 ml-auto mr-2" data-dismiss="modal">Thoát</button>
+                        <button type="submit" localize-content class="btn btn-danger col-2 mr-3">Sửa</button>
+                    </div>
+                </form>
+               
+            </div>
+        </div>
+    </div>
+</div>
+
+@await Html.PartialAsync("_ValidationScriptsPartial")

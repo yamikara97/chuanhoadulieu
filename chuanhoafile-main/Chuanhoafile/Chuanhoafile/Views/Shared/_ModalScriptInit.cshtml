@@ -1,112 +1,120 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿
 @{
+    ViewData["Title"] = "_ModalScriptInit";
 }
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#Execute-Modal').on('hidden.bs.modal', function () {
-            $(".excl").empty();
-        })
-        //$('#dinhdangngaysinh').on('change', function () {
-        //    if ($(this).is(':checked')) {
-        //        $('#excl-3').attr("disabled", true);
-        //        $('#excl-4').attr("disabled", true);
-        //    } else {
-        //        $('#excl-3').removeAttr('disabled');
-        //        $('#excl-4').removeAttr('disabled');
-        //    }
-        //});
-        $("#input-b9").fileinput({
-            showUpload: false,
-            language: "vi",
-            dropZoneEnabled: true,
-            rtl: true,
-            allowedFileExtensions: ["xls", "xlsx"]
-            //uploadUrl: '/site/file-upload-single'
-        });
-        $('#finishBtn').on('click', function (e) {
-            e.preventDefault();
-            var form = $(this).parents('.action-begins').find('form');
-            var dataToSend = new FormData(form.get(0));
 
-            $.ajax({
-                url: '@Url.Content("~/Home/FinishExecute")',
-                type: 'POST',
-                data: dataToSend, processData: false, contentType: false,
-                beforeSend: function () {
-                    //$('.loading').css('display', 'block');
-                },
-                success: function (data1) {
-                    $('.loading').css('display', 'none');
-                    if (data1 != null && data1 != "") {
-                        if (data1.status == "error") {
-                            $('.error').css("display", "block");
-                            $('#error').html(data1.message);
-                            setTimeout(function () { $('.error').css("display", "none"); }, 3000);
-                        }
-                        else {
-                            window.location = '/Home/Download?file_name=' + data1.message;
-                        }
-                    }
-                },
-                false: function (data1) {
-                    $('.loading').css('display', 'none');
-                    alert(JSON.stringify(data1));
-                }
+@model string
+<p hidden id="check">@Model</p>
+<script type="text/javascript">
+    $(function () {
+
+        var placeholderElement = $('#modal-placeholder');
+
+        $(document).on('click', 'button[data-toggle="ajax-modal"]', function (event) {
+            var url = $(this).data('url')
+            $.get(url).done(function (data) {
+                placeholderElement.html(data);
+                placeholderElement.find('.modal').modal('show');
             });
         });
-        $('#uploadfile').on('click', function (e) {
-            e.preventDefault();
-            var form = $(this).parents('.action-begins').find('form');
+
+        placeholderElement.on('click', '[data-save="modal"]', function (event) {
+            event.preventDefault();
+
+            var form = $(this).parents('.modal').find('form');
             var actionUrl = form.attr('action');
             var dataToSend = new FormData(form.get(0));
+
+            if ($(this).data('action') != undefined) {
+                actionUrl = actionUrl + $(this).data('action');
+            }
+
+            var count = 0;
             $.ajax({
-                url: '@Url.Content("~/Home/")' + actionUrl,
-                type: 'POST',
-                data: dataToSend, processData: false, contentType: false,
-                beforeSend: function () {
+                url: actionUrl, method: 'post', data: dataToSend, processData: false, contentType: false, async: true, beforeSend: function () {
                     $('.loading').css('display', 'block');
-                },
-                success: function (data1) {
-                    $('.loading').css('display', 'none');
-                    if (data1 != null && data1 != "") {
-                        $('#Execute-Modal').modal();
-                        $('.excl').each(function () {
-                            var select = $(this);
 
-                            var ele = document.createElement("option");
-                            ele.textContent = "------Trống-------";
-                            ele.value = "-1";
-                            select.append(ele);
-
-                            var count = 0;
-                            for (count = 0; count < Object.keys(data1).length; count++) {
-                                var opt = data1[count];
-                                var el = document.createElement("option");
-                                el.textContent = opt.name;
-                                el.value = opt.colIndex;
-                                if (select.attr("id") == "excl-" + opt.colIndex) {
-                                    el.selected = true;
-                                }
-                                select.append(el);
-                            }
-                            //for (var i = 0; i < Object.keys(data1).length; i++) {
-                            //    var opt = data1[i];
-                            //    var el = document.createElement("option");
-                            //    el.textContent = opt.name;
-                            //    el.value = opt.colIndex;
-                            //    select.appendChild(el);
-                            //}
-                        });
-                    }
-                },
-                false: function (data1) {
-                    $('.loading').css('display', 'none');
-                    alert(JSON.stringify(data1));
                 }
+            }).done(function (data) {
+                $('.loading').css('display', 'none');
+                count = -1;
+                var newBody = $('.modal-body', data);
+                placeholderElement.find('.modal-body').replaceWith(newBody);
+
+                var isValid = newBody.find('[name="IsValid"]').val() === 'True';
+
+                if (actionUrl.includes("Delete") && data != null) isValid = true;
+                if (actionUrl.includes("Detail") && data != null) isValid = true;
+                if (actionUrl.includes("Create") && data != null) isValid = true;
+                if (actionUrl.includes("Create2") && data != null) isValid = true;
+                if (actionUrl.includes("AddRole") && data != null) isValid = true;
+                if (actionUrl.includes("ResetPassword") && data != null) isValid = true;
+                if (actionUrl.includes("SendPrincipal") && data != null) isValid = true;
+                if (actionUrl.includes("SendFactory") && data != null) isValid = true;
+                if (actionUrl.includes("ImportList") && data != null) isValid = true;
+                if (actionUrl.includes("SendTech") && data != null) isValid = true;
+                if (actionUrl.includes("SendEmail") && data != null) isValid = true;
+                if (actionUrl.includes("Danhgia") && data != null) isValid = true;
+                if (actionUrl.includes("UploadFile") && data != null) isValid = true;
+                if (actionUrl.includes("SetFinish") && data != null) isValid = true;
+                if (actionUrl.includes("Khoiphuc") && data != null) isValid = true;
+                if (actionUrl.includes("Danhgia") && data != null) isValid = true;
+                if (actionUrl.includes("GetWorkProgress") && data != null) isValid = true;
+                if (actionUrl.includes("CreateQuick") && data != null) isValid = true;
+                if (actionUrl.includes("CreateWorkAsign") && data != null) isValid = true;
+                if (isValid) {
+
+                    var notificationsPlaceholder = $('#notification');
+                    var notificationsUrl = notificationsPlaceholder.data('url');
+                    $.get(notificationsUrl).done(function (notifications) {
+                        notificationsPlaceholder.html(notifications);
+
+                        $(".alert-primary").fadeTo(1500, 500).slideUp(500, function () {
+                            $(".alert-primary").alert('close');
+                        });
+                    });
+
+                    var tableElement = $('#@Model');
+                    var tableUrl = tableElement.data('url');
+                    $.get(tableUrl).done(function (table) {
+                        tableElement.DataTable().destroy();
+                        tableElement.html(table);
+                        tableElement.DataTable({
+                            "dom": '<"top"flp>',
+                            fixedHeader: {
+                                header: true
+                            },
+                           "order": [[1, "desc"]],
+                            "language": {
+                                "lengthMenu": "Hiển thị _MENU_ dòng trên một trang",
+                                "zeroRecords": "Không có bản ghi nào",
+                                "info": "Trang _PAGE_ trên _PAGES_",
+                                "infoEmpty": "Không có bản ghi nào",
+                                "infoFiltered": "(Kết quả trả về được duyệt trên tổng _MAX_ bản ghi)",
+                                "search": "Tìm kiếm:",
+                                "paginate": {
+                                    "first": "Về đầu",
+                                    "last": "Đến cuối",
+                                    "next": "Tiếp",
+                                    "previous": "Trước"
+                                },
+                            },
+                            "pageLength": 15,
+                            "bLengthChange": false
+                        });
+                        $(".dataTables_filter input").unbind();
+                        $(".dataTables_filter input").bind('keyup', function (e) {
+                            if (e.keyCode == 13) {
+                                tableElement.DataTable().search(this.value).draw();
+                            }
+                        });
+                    });
+
+                    placeholderElement.find('.modal').modal('hide');
+                }//
             });
         });
     });
 
 </script>
+

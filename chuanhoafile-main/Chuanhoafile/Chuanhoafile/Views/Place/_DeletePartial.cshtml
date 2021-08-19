@@ -1,0 +1,37 @@
+﻿@model Chuanhoafile.Models.places
+
+<div class="modal fade" id="delete-model" tabindex="-1" role="dialog" aria-labelledby="delete-model-label" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Xác nhận xóa địa điểm này, tất cả các địa điểm thuộc địa điểm này cũng sẽ bị xóa theo</h3>
+            </div>
+            <div class="modal-body form-horizontal">
+                <form asp-action="Delete" enctype="multipart/form-data">
+                    <div class=" col-12 ml-auto mr-auto container">
+                        <div class="row pl-2">
+                            <div class="col-6">
+                                <label asp-for="NameOutput" class="control-label">Tên địa điểm</label>
+                                <input readonly asp-for="NameOutput" class="form-control" />
+                                <span asp-validation-for="NameOutput" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row pl-2 mt-2">
+                            <div class="col-12">
+                                <label class="control-label">Mã</label>
+                                <input readonly asp-for="Code" class="form-control" />
+                                <span asp-validation-for="Code" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" localize-content>Thoát</button>
+                <button type="button" class="btn btn-danger" data-save="modal" localize-content>Xóa</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@await Html.PartialAsync("_ValidationScriptsPartial")

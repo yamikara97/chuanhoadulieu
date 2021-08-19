@@ -1,0 +1,62 @@
+﻿@model IEnumerable<Chuanhoafile.Models.places>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="container-fluid">
+
+    <div class="card shadow mt-3">
+        <div class="row">
+            <div class="col-12">
+                <ul class="breadcrumb bg-white font-weight-bold" style="margin: unset !important">
+                    <li class="breadcrumb-item">
+                        <a asp-area="" asp-controller="Home" asp-action="Index">Trang chủ</a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <a>Quản lý địa điểm khu vực</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <hr />
+    <div class="container-fluid">
+        <div class="row">
+            <button id="btnAdd" class=" mr-md-2 btn btn-primary btn-icon-split shadow w-auto ml-auto" data-toggle="ajax-modal" data-target="#order-model" data-url="@Url.Action("CreateByFile")">
+                <span class="icon text-white-50">
+                    <i class="fas fa-plus-circle"></i>
+                </span>
+                <span class="text">Thêm nhiều</span>
+            </button>
+            <button id="btnAdd" class=" mr-md-0 btn btn-primary btn-icon-split shadow w-auto" data-toggle="ajax-modal" data-target="#order-model" data-url="@Url.Action("Create")">
+                <span class="icon text-white-50">
+                    <i class="fas fa-plus-circle"></i>
+                </span>
+                <span class="text">Thêm mới</span>
+            </button>
+
+        </div>
+    </div>
+    <hr />
+    <div id="modal-placeholder"></div>
+</div>
+<div class="card shadow m-4">
+    <div class="card-body">
+        <div class="table-responsive">
+
+            @await Html.PartialAsync("_DataTablePartial.cshtml", Model)
+
+        </div>
+    </div>
+</div>
+<hr />
+@section Scripts
+{
+    @{await Html.RenderPartialAsync("_ModalScriptInit", "places");}
+}
+
+
+<script>
+
+</script>

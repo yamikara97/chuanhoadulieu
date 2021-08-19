@@ -1,0 +1,107 @@
+﻿
+@model IEnumerable<Chuanhoafile.Models.UserViewModel>
+
+                <table id="users" class="table nowrap table-bordered table-striped mt-5 table-data">
+                    <thead>
+                        <tr>
+                            <th>Tài khoản</th>
+                            <th>Tên</th>
+                            <th>Quyền</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            if (item != null)
+                            {
+                                <tr>
+                                    <td>@item.user.Email</td>
+                                    <td>@item.user.FullName</td>
+                                    <td>
+                                        @if (@item.role == null)
+                                        {
+                                            <span></span>
+                                        }
+                                        else
+                                        {
+                                            @item.role.Name
+                                        }
+                                    </td>
+                                    <td class="text-center">
+                                        @if (item.role == null)
+                                        {
+
+                                            <button class="btn btn-success action-btn border-0" data-toggle="ajax-modal" data-target="#add-model" data-url="@(Url.Action("AddRole") + "/" + item.user.Id)">
+                                                <span>Quyền</span>
+                                            </button>
+                                            <button class="btn btn-primary action-btn border-0" data-toggle="ajax-modal" data-target="#order-model" data-url="@(Url.Action("Create") + "/" + item.user.Id)">
+                                                <span>Sửa</span>
+                                            </button>
+                                            <button class="btn btn-secondary action-btn border-0" data-toggle="ajax-modal" data-target="#add-model" data-url="@(Url.Action("ResetPassword") + "/" + item.user.Id)">
+                                                <span>Mật khẩu</span>
+                                            </button>
+                                            <button class="btn btn-danger action-btn border-0" data-toggle="ajax-modal" data-target="#delete-model" data-url="@(Url.Action("Delete") + "/" + item.user.Id)">
+                                                <span>Xóa</span>
+                                            </button>
+                                        }
+                                        else if (@item.role.Name != "Admin")
+                                        {
+
+                                            <button class="btn btn-success action-btn border-0" data-toggle="ajax-modal" data-target="#add-model" data-url="@(Url.Action("AddRole") + "/" + item.user.Id)">
+                                                <span>Quyền</span>
+                                            </button>
+                                            <button class="btn btn-primary action-btn border-0" data-toggle="ajax-modal" data-target="#order-model" data-url="@(Url.Action("Create") + "/" + item.user.Id)">
+                                                <span>Sửa</span>
+                                            </button>
+                                            <button class="btn btn-secondary action-btn border-0" data-toggle="ajax-modal" data-target="#add-model" data-url="@(Url.Action("ResetPassword") + "/" + item.user.Id)">
+                                                <span>Mật khẩu</span>
+                                            </button>
+                                            <button class="btn btn-danger action-btn border-0" data-toggle="ajax-modal" data-target="#delete-model" data-url="@(Url.Action("Delete") + "/" + item.user.Id)">
+                                                <span>Xóa</span>
+                                            </button>
+                                        }
+                                        else if (@item.role.Name == "Admin")
+                                        {
+                                            @if (ViewBag.checkAdmin != null)
+                                            {
+                                                @if (ViewBag.checkAdmin == "isadmin")
+                                                {
+                                                    @if (item.user.IsAdmin)
+                                                    {
+                                                        <button class="btn btn-primary action-btn border-0" data-toggle="ajax-modal" data-target="#order-model" data-url="@(Url.Action("Create") + "/" + item.user.Id)">
+                                                            <span>Sửa</span>
+                                                        </button>
+                                                        <button class="btn btn-secondary action-btn border-0" data-toggle="ajax-modal" data-target="#add-model" data-url="@(Url.Action("ResetPassword") + "/" + item.user.Id)">
+                                                            <span>Mật khẩu</span>
+                                                        </button>
+                                                    }
+                                                    else
+                                                    {
+                                                        <button class="btn btn-success action-btn border-0" data-toggle="ajax-modal" data-target="#add-model" data-url="@(Url.Action("AddRole") + "/" + item.user.Id)">
+                                                            <span>Quyền</span>
+                                                        </button>
+                                                        <button class="btn btn-primary action-btn border-0" data-toggle="ajax-modal" data-target="#order-model" data-url="@(Url.Action("Create") + "/" + item.user.Id)">
+                                                            <span>Sửa</span>
+                                                        </button>
+                                                        <button class="btn btn-secondary action-btn border-0" data-toggle="ajax-modal" data-target="#add-model" data-url="@(Url.Action("ResetPassword") + "/" + item.user.Id)">
+                                                            <span>Mật khẩu</span>
+                                                        </button>
+                                                        <button class="btn btn-danger action-btn border-0" data-toggle="ajax-modal" data-target="#delete-model" data-url="@(Url.Action("Delete") + "/" + item.user.Id)">
+                                                            <span>Xóa</span>
+                                                        </button>
+                                                    }
+
+                                                }
+                                            }
+                                        }
+                                    </td>
+
+                                </tr>
+                            }
+                        }
+
+                    </tbody>
+                </table>
+
+    

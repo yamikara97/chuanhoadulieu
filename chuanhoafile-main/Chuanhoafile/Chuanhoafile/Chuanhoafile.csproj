@@ -6,13 +6,51 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\Migrations\00000000000000_CreateIdentitySchema.cs" />
+    <Compile Remove="Data\Migrations\00000000000000_CreateIdentitySchema.Designer.cs" />
+    <Compile Remove="Migrations\20210819022225_db-generate.cs" />
+    <Compile Remove="Migrations\20210819022225_db-generate.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Views\Place\_DeletePartial2.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Controllers\ApplicationUsersController.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="bootstrap-fileinput" Version="5.2.3" />
     <PackageReference Include="EPPlus" Version="5.7.3" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.12" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.12" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.12" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.12" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.12" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.15" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.15" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.15">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Data\Migrations\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Views\ApplicationUsers\Index.cshtml" />
+    <None Include="Views\ApplicationUsers\_AddRolePartial.cshtml" />
+    <None Include="Views\ApplicationUsers\_DataTablePartial.cshtml" />
+    <None Include="Views\ApplicationUsers\_DeletePartial.cshtml" />
+    <None Include="Views\ApplicationUsers\_OrderPartial.cshtml" />
+    <None Include="Views\ApplicationUsers\_ResetPassword.cshtml" />
+    <None Include="Views\Place\_DeletePartial2.cshtml" />
+    <None Include="wwwroot\datatables\dataTables.bootstrap4.js" />
+    <None Include="wwwroot\datatables\dataTables.bootstrap4.min.js" />
+    <None Include="wwwroot\datatables\jquery.dataTables.js" />
+    <None Include="wwwroot\datatables\jquery.dataTables.min.js" />
   </ItemGroup>
 
 </Project>

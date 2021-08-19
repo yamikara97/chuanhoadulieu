@@ -1,4 +1,5 @@
 using Chuanhoafile.Data;
+using Chuanhoafile.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -28,21 +29,35 @@ namespace Chuanhoafile
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                   options.UseSqlServer(
+                       Configuration.GetConnectionString("DefaultConnection")));
+            services.AddIdentity<ApplicationUser, IdentityRole<Guid>>()
+             .AddEntityFrameworkStores<ApplicationDbContext>()
+             .AddDefaultUI()
+             .AddDefaultTokenProviders();
             services.AddControllersWithViews();
             services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole<Guid>> roleManager)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
+                using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+                {
+                    using (var context = serviceScope.ServiceProvider.GetService<ApplicationDbContext>())
+                    {
+                        context.Database.Migrate();
+
+                        // Initialize roles
+                        ApplicationDbInitializer.SeedRoles(roleManager);
+                        // Initialize users
+                        ApplicationDbInitializer.SeedUsers(userManager);
+                    }
+                }
             }
             else
             {

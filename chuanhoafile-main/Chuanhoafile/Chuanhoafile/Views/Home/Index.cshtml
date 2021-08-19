@@ -3,9 +3,7 @@
 
 }
 <div class="container action-begins">
-    <div class="loading">
-        <div class="spinner-border"></div>
-    </div>
+   
     <div class="bg-danger error">
         <i class="fas fa-close"></i>
         <span class="p-3 text-white" id="error"></span>
@@ -43,5 +41,5 @@
 </div>
 @section Scripts
 {
-    @{await Html.RenderPartialAsync("_ModalScriptInit");}
+    @{await Html.RenderPartialAsync("_ModalScriptInitHome");}
 }

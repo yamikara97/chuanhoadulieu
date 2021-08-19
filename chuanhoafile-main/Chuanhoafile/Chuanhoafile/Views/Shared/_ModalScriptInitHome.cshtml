@@ -1,0 +1,112 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#Execute-Modal').on('hidden.bs.modal', function () {
+            $(".excl").empty();
+        })
+        //$('#dinhdangngaysinh').on('change', function () {
+        //    if ($(this).is(':checked')) {
+        //        $('#excl-3').attr("disabled", true);
+        //        $('#excl-4').attr("disabled", true);
+        //    } else {
+        //        $('#excl-3').removeAttr('disabled');
+        //        $('#excl-4').removeAttr('disabled');
+        //    }
+        //});
+        $("#input-b9").fileinput({
+            showUpload: false,
+            language: "vi",
+            dropZoneEnabled: true,
+            rtl: true,
+            allowedFileExtensions: ["xls", "xlsx"]
+            //uploadUrl: '/site/file-upload-single'
+        });
+        $('#finishBtn').on('click', function (e) {
+            e.preventDefault();
+            var form = $(this).parents('.action-begins').find('form');
+            var dataToSend = new FormData(form.get(0));
+
+            $.ajax({
+                url: '@Url.Content("~/Home/FinishExecute")',
+                type: 'POST',
+                data: dataToSend, processData: false, contentType: false,
+                beforeSend: function () {
+                    $('.loading').css('display', 'block');
+                },
+                success: function (data1) {
+                    $('.loading').css('display', 'none');
+                    if (data1 != null && data1 != "") {
+                        if (data1.status == "error") {
+                            $('.error').css("display", "block");
+                            $('#error').html(data1.message);
+                            setTimeout(function () { $('.error').css("display", "none"); }, 3000);
+                        }
+                        else {
+                            window.location = '/Home/Download?file_name=' + data1.message;
+                        }
+                    }
+                },
+                false: function (data1) {
+                    $('.loading').css('display', 'none');
+                    alert(JSON.stringify(data1));
+                }
+            });
+        });
+        $('#uploadfile').on('click', function (e) {
+            e.preventDefault();
+            var form = $(this).parents('.action-begins').find('form');
+            var actionUrl = form.attr('action');
+            var dataToSend = new FormData(form.get(0));
+            $.ajax({
+                url: '@Url.Content("~/Home/")' + actionUrl,
+                type: 'POST',
+                data: dataToSend, processData: false, contentType: false,
+                beforeSend: function () {
+                    $('.loading').css('display', 'block');
+                },
+                success: function (data1) {
+                    $('.loading').css('display', 'none');
+                    if (data1 != null && data1 != "") {
+                        $('#Execute-Modal').modal();
+                        $('.excl').each(function () {
+                            var select = $(this);
+
+                            var ele = document.createElement("option");
+                            ele.textContent = "------Trống-------";
+                            ele.value = "-1";
+                            select.append(ele);
+
+                            var count = 0;
+                            for (count = 0; count < Object.keys(data1).length; count++) {
+                                var opt = data1[count];
+                                var el = document.createElement("option");
+                                el.textContent = opt.name;
+                                el.value = opt.colIndex;
+                                if (select.attr("id") == "excl-" + opt.colIndex) {
+                                    el.selected = true;
+                                }
+                                select.append(el);
+                            }
+                            //for (var i = 0; i < Object.keys(data1).length; i++) {
+                            //    var opt = data1[i];
+                            //    var el = document.createElement("option");
+                            //    el.textContent = opt.name;
+                            //    el.value = opt.colIndex;
+                            //    select.appendChild(el);
+                            //}
+                        });
+                    }
+                },
+                false: function (data1) {
+                    $('.loading').css('display', 'none');
+                    alert(JSON.stringify(data1));
+                }
+            });
+        });
+    });
+
+</script>
