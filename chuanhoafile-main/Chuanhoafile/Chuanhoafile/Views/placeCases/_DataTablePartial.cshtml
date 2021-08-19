@@ -1,0 +1,35 @@
+﻿
+@model IEnumerable<Chuanhoafile.Models.placeCase>
+
+<table id="placescase" class="table nowrap table-bordered table-striped mt-5 table-data">
+    <thead>
+        <tr>
+            <th>Giá trị sai</th>
+            <th>Mã địa điểm đúng</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            if (item != null)
+            {
+        <tr>
+            <td>@item.nameCase</td>
+            <td>@item.placeCode</td>
+            <td class="text-center">
+                <button class="btn btn-primary action-btn border-0" data-toggle="ajax-modal" data-target="#order-model" data-url="@(Url.Action("Create") + "/" + item.Id)">
+                    <span>Sửa</span>
+                </button>
+                <button class="btn btn-danger action-btn border-0" data-toggle="ajax-modal" data-target="#delete-model" data-url="@(Url.Action("Delete") + "/" + item.Id)">
+                    <span>Xóa</span>
+                </button>
+            </td>
+
+        </tr>
+            }
+        }
+
+    </tbody>
+</table>
+

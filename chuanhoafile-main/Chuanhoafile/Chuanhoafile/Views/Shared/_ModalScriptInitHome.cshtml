@@ -43,7 +43,7 @@
                         if (data1.status == "error") {
                             $('.error').css("display", "block");
                             $('#error').html(data1.message);
-                            setTimeout(function () { $('.error').css("display", "none"); }, 3000);
+                            setTimeout(function () { $('.error').css("display", "none"); }, 7000);
                         }
                         else {
                             window.location = '/Home/Download?file_name=' + data1.message;

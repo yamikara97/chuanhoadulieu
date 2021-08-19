@@ -257,7 +257,79 @@ namespace Chuanhoafile.Controllers
                                             }
                                             //////// col 9
 
+                                            if (ws.Cells[rowInd, tinhthanh].Value == null || ws.Cells[rowInd, tinhthanh].Value.ToString() == "")
+                                            {
+                                                errorlist += "Thiếu tỉnh thành; ";
+                                                resultWorkSheet.Cells[resultRowIndex, 10].Value = "";
+                                                resultWorkSheet.Cells[resultRowIndex, 11].Value = "";
+                                            }
+                                            else
+                                            {
+                                                var tinhthanhcell = GetCorrectName(ws.Cells[rowInd, tinhthanh].Value.ToString());
+                                                if (tinhthanhcell != null)
+                                                {
+                                                    resultWorkSheet.Cells[resultRowIndex, 10].Value = tinhthanhcell.NameOutput;
+                                                    resultWorkSheet.Cells[resultRowIndex, 11].Value = tinhthanhcell.Code;
+                                                }
+                                                else
+                                                {
+                                                    errorlist += "tỉnh thành: "+ ws.Cells[rowInd, tinhthanh].Value.ToString() + " không tồn tại hoặc sai; ";
+                                                    resultWorkSheet.Cells[resultRowIndex, 10].Value = "";
+                                                    resultWorkSheet.Cells[resultRowIndex, 11].Value = "";
+                                                }
+                                                
+                                            }
+                                            //////// col 10-11
+                                            ///
+                                            if (ws.Cells[rowInd, quanhuyen].Value == null || ws.Cells[rowInd, quanhuyen].Value.ToString() == "")
+                                            {
+                                                errorlist += "Thiếu quận huyện; ";
+                                                resultWorkSheet.Cells[resultRowIndex, 12].Value = "";
+                                                resultWorkSheet.Cells[resultRowIndex, 13].Value = "";
+                                            }
+                                            else
+                                            {
+                                                var quanhuyencell = GetCorrectName(ws.Cells[rowInd, quanhuyen].Value.ToString());
+                                                if (quanhuyencell != null)
+                                                {
+                                                    resultWorkSheet.Cells[resultRowIndex, 12].Value = quanhuyencell.NameOutput;
+                                                    resultWorkSheet.Cells[resultRowIndex, 13].Value = quanhuyencell.Code;
+                                                }
+                                                else
+                                                {
+                                                    errorlist += "quận huyện: " + ws.Cells[rowInd, quanhuyen].Value.ToString() + " không tồn tại hoặc sai; ";
+                                                    resultWorkSheet.Cells[resultRowIndex, 12].Value = "";
+                                                    resultWorkSheet.Cells[resultRowIndex, 13].Value = "";
+                                                }
 
+                                            }
+                                            //////// col 12-13
+
+
+                                            if (ws.Cells[rowInd, phuongxa].Value == null || ws.Cells[rowInd, phuongxa].Value.ToString() == "")
+                                            {
+                                                errorlist += "Thiếu phường xã; ";
+                                                resultWorkSheet.Cells[resultRowIndex, 14].Value = "";
+                                                resultWorkSheet.Cells[resultRowIndex, 15].Value = "";
+                                            }
+                                            else
+                                            {
+                                                var phuongxacell = GetCorrectName(ws.Cells[rowInd, phuongxa].Value.ToString());
+                                                if (phuongxacell != null)
+                                                {
+                                                    resultWorkSheet.Cells[resultRowIndex, 14].Value = phuongxacell.NameOutput;
+                                                    resultWorkSheet.Cells[resultRowIndex, 15].Value = phuongxacell.Code;
+                                                }
+                                                else
+                                                {
+                                                    errorlist += "phường xã: " + ws.Cells[rowInd, phuongxa].Value.ToString() + " không tồn tại hoặc sai; ";
+                                                    resultWorkSheet.Cells[resultRowIndex, 14].Value = "";
+                                                    resultWorkSheet.Cells[resultRowIndex, 15].Value = "";
+                                                }
+
+                                            }
+                                            //////// col 14-15
+                                            ///
 
                                             if (ws.Cells[rowInd, diachi].Value == null || ws.Cells[rowInd, diachi].Value.ToString() == "")
                                             {
@@ -358,6 +430,48 @@ namespace Chuanhoafile.Controllers
                 return Json(ex.Data);
             }
             
+        }
+
+
+        private places GetCorrectName(string wrongName)
+        {
+            wrongName = wrongName.Trim();
+            while(wrongName.Contains("  "))
+            {
+                wrongName = wrongName.Replace("  "," ");
+            }
+            var plc = new places();
+            if (wrongName == "")
+            {
+                return null;
+            }
+            plc = _context.Places.Where(a => a.NameOutput.ToLower().Contains(NormalizeWord(wrongName)) == true).FirstOrDefault();
+            if(plc != null)
+            {
+                return plc;
+            }
+            else
+            {
+                var plcase = _context.PlaceCases.Where(a => a.nameCase == NormalizeWord(wrongName)).FirstOrDefault();
+                if (plcase != null)
+                {
+                    plc = _context.Places.Where(a=>a.Code == plcase.placeCode).FirstOrDefault();
+                    return plc == null ? null : plc;
+                }
+            }
+            return plc;
+        }
+
+        private string NormalizeWord(string input)
+        {
+            string output = input.Trim();
+            output = input.ToLower();
+            while (output.Contains("  "))
+            {
+                output = output.Replace("  ", " ");
+            }
+
+            return output;
         }
     }
 }
