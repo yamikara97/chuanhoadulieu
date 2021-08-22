@@ -6,6 +6,7 @@
         <tr>
             <th>Giá trị sai</th>
             <th>Mã địa điểm đúng</th>
+            <th>Mã địa điểm cấp trên</th>
             <th></th>
         </tr>
     </thead>
@@ -17,6 +18,7 @@
         <tr>
             <td>@item.nameCase</td>
             <td>@item.placeCode</td>
+            <td>@item.placeFatherCode</td>
             <td class="text-center">
                 <button class="btn btn-primary action-btn border-0" data-toggle="ajax-modal" data-target="#order-model" data-url="@(Url.Action("Create") + "/" + item.Id)">
                     <span>Sửa</span>

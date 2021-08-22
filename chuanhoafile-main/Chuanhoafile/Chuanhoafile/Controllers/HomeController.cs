@@ -78,9 +78,9 @@ namespace Chuanhoafile.Controllers
                             {
                                 using (ExcelPackage resultSheet = new ExcelPackage())
                                 {
-                                    try
-                                    {
-                                        using (FileStream fs = System.IO.File.Open(filePath, FileMode.Open))
+                                try
+                                {
+                                    using (FileStream fs = System.IO.File.Open(filePath, FileMode.Open))
                                         {
                                             ExcelPackage templateSheet = new ExcelPackage();
                                             await templateSheet.LoadAsync(fs);
@@ -126,8 +126,17 @@ namespace Chuanhoafile.Controllers
                                                 }
                                                 else
                                                 {
-                                                    errorlist += "Ngày tháng năm sinh sai định dạng; ";
-                                                    resultWorkSheet.Cells[resultRowIndex, 3].Value = "";
+                                                    string date2 = ChuanhoaDate(ws.Cells[rowInd, ngaythangnamsinh].Value.ToString());
+                                                        DateTime datefinal;
+                                                        if (DateTime.TryParse(date2, out datefinal))
+                                                        {
+                                                            resultWorkSheet.Cells[resultRowIndex, 3].Value = datefinal.ToString("dd/MM/yyyy");
+                                                        }
+                                                        else
+                                                        {
+                                                            errorlist += "Ngày tháng năm sinh sai định dạng; ";
+                                                            resultWorkSheet.Cells[resultRowIndex, 3].Value = "";
+                                                        }
                                                 }
                                             }
                                             //////// col 3
@@ -179,7 +188,7 @@ namespace Chuanhoafile.Controllers
                                             ///
                                             if (ws.Cells[rowInd, donvi].Value == null || ws.Cells[rowInd, donvi].Value.ToString() == "")
                                             {
-                                                errorlist += "Thiếu đơn vị công tác; ";
+                                              
                                                 resultWorkSheet.Cells[resultRowIndex, 6].Value = "";
                                             }
                                             else
@@ -196,18 +205,14 @@ namespace Chuanhoafile.Controllers
                                             }
                                             else
                                             {
-                                                string phonenum = ws.Cells[rowInd, sodienthoai].Value.ToString().Replace(" ","").Replace(".","").Replace("-","").Replace(" ", "").Trim();
-                                                if(phonenum.Length == 10 && phonenum[0] == '0')
+                                                string phonenum = ws.Cells[rowInd, sodienthoai].Value.ToString().Replace("+", "").Replace(" ","").Replace(".","").Replace("-","").Replace(" ", "").Trim();
+                                                while (phonenum[0] == '0')
                                                 {
-                                                    resultWorkSheet.Cells[resultRowIndex, 7].Value = phonenum;
+                                                  phonenum = phonenum.Substring(1);
                                                 }
-                                                else if (phonenum.Length == 11 && phonenum[0] == '8' && phonenum[1] == '4')
+                                                if(phonenum.Length == 9)
                                                 {
-                                                    resultWorkSheet.Cells[resultRowIndex, 7].Value = "0" + phonenum.Substring(2,10);
-                                                }
-                                                else if (phonenum.Length == 12 && phonenum[0] == '+' && phonenum[1] == '8' && phonenum[2] == '4')
-                                                {
-                                                    resultWorkSheet.Cells[resultRowIndex, 7].Value = "0" + phonenum.Substring(3, 10);
+                                                    resultWorkSheet.Cells[resultRowIndex, 7].Value = "0" + phonenum;
                                                 }
                                                 else
                                                 {
@@ -231,7 +236,7 @@ namespace Chuanhoafile.Controllers
                                                 }
                                                 else
                                                 {
-                                                    errorlist += "CMND/CCCD " + cmndS + " không hợp lệ; ";
+                                                    errorlist += "CMND/CCCD " + cmndS + " không hợp lệ ; ";
                                                     resultWorkSheet.Cells[resultRowIndex, 8].Value = "";
                                                 }
                                             }
@@ -239,7 +244,6 @@ namespace Chuanhoafile.Controllers
                                             ///
                                             if (ws.Cells[rowInd, thebaohiem].Value == null || ws.Cells[rowInd, thebaohiem].Value.ToString() == "")
                                             {
-                                                errorlist += "Thiếu mã thẻ Bảo hiểm; ";
                                                 resultWorkSheet.Cells[resultRowIndex, 9].Value = "";
                                             }
                                             else
@@ -251,12 +255,13 @@ namespace Chuanhoafile.Controllers
                                                 }
                                                 else
                                                 {
-                                                    errorlist += "Mã thẻ BHYT " + bhyt + "số ký tự: " + bhyt.Length + " không hợp lệ; ";
+                                                    errorlist += "Mã thẻ BHYT " + bhyt + " số ký tự: " + bhyt.Length + " không hợp lệ (Không bắt buộc, nếu không sửa được thì để trống); ";
                                                     resultWorkSheet.Cells[resultRowIndex, 9].Value = "";
                                                 }
                                             }
                                             //////// col 9
-
+                                            string tpCode = "none";
+                                            string qhcode = "none";
                                             if (ws.Cells[rowInd, tinhthanh].Value == null || ws.Cells[rowInd, tinhthanh].Value.ToString() == "")
                                             {
                                                 errorlist += "Thiếu tỉnh thành; ";
@@ -265,11 +270,12 @@ namespace Chuanhoafile.Controllers
                                             }
                                             else
                                             {
-                                                var tinhthanhcell = GetCorrectName(ws.Cells[rowInd, tinhthanh].Value.ToString());
+                                                var tinhthanhcell = GetCorrectName(ws.Cells[rowInd, tinhthanh].Value.ToString(),"");
                                                 if (tinhthanhcell != null)
                                                 {
                                                     resultWorkSheet.Cells[resultRowIndex, 10].Value = tinhthanhcell.NameOutput;
                                                     resultWorkSheet.Cells[resultRowIndex, 11].Value = tinhthanhcell.Code;
+                                                    tpCode = tinhthanhcell.Code;
                                                 }
                                                 else
                                                 {
@@ -289,11 +295,12 @@ namespace Chuanhoafile.Controllers
                                             }
                                             else
                                             {
-                                                var quanhuyencell = GetCorrectName(ws.Cells[rowInd, quanhuyen].Value.ToString());
+                                                var quanhuyencell = GetCorrectName(ws.Cells[rowInd, quanhuyen].Value.ToString(), tpCode);
                                                 if (quanhuyencell != null)
                                                 {
                                                     resultWorkSheet.Cells[resultRowIndex, 12].Value = quanhuyencell.NameOutput;
                                                     resultWorkSheet.Cells[resultRowIndex, 13].Value = quanhuyencell.Code;
+                                                    qhcode = quanhuyencell.Code;
                                                 }
                                                 else
                                                 {
@@ -314,7 +321,7 @@ namespace Chuanhoafile.Controllers
                                             }
                                             else
                                             {
-                                                var phuongxacell = GetCorrectName(ws.Cells[rowInd, phuongxa].Value.ToString());
+                                                var phuongxacell = GetCorrectName(ws.Cells[rowInd, phuongxa].Value.ToString(),qhcode);
                                                 if (phuongxacell != null)
                                                 {
                                                     resultWorkSheet.Cells[resultRowIndex, 14].Value = phuongxacell.NameOutput;
@@ -333,7 +340,7 @@ namespace Chuanhoafile.Controllers
 
                                             if (ws.Cells[rowInd, diachi].Value == null || ws.Cells[rowInd, diachi].Value.ToString() == "")
                                             {
-                                                errorlist += "Thiếu địa chỉ chi tiết; ";
+                                               
                                                 resultWorkSheet.Cells[resultRowIndex, 16].Value = "";
                                             }
                                             else
@@ -364,12 +371,12 @@ namespace Chuanhoafile.Controllers
                         }
                     }
                 }
-            }
+        }
             catch (Exception ex)
             {
                 return Json(new { status = "error", message = ex.Message + "----" + collect["dinhdangngaysinh"].ToString() });
             }
-            return Json(new { status = "error", message = "Hệ thống không thể xử lý" });
+return Json(new { status = "error", message = "Hệ thống không thể xử lý" });
         }
 
         [HttpGet]
@@ -433,7 +440,7 @@ namespace Chuanhoafile.Controllers
         }
 
 
-        private places GetCorrectName(string wrongName)
+        private places GetCorrectName(string wrongName, string fatherID)
         {
             wrongName = wrongName.Trim();
             while(wrongName.Contains("  "))
@@ -445,7 +452,8 @@ namespace Chuanhoafile.Controllers
             {
                 return null;
             }
-            plc = _context.Places.Where(a => a.NameOutput.ToLower().Contains(NormalizeWord(wrongName)) == true).FirstOrDefault();
+            
+            plc = _context.Places.Where(a => a.NameOutput.ToLower().Contains(NormalizeWord(wrongName)) == true && a.FatherId == fatherID).FirstOrDefault();
             if(plc != null)
             {
                 return plc;
@@ -455,13 +463,32 @@ namespace Chuanhoafile.Controllers
                 var plcase = _context.PlaceCases.Where(a => a.nameCase == NormalizeWord(wrongName)).FirstOrDefault();
                 if (plcase != null)
                 {
-                    plc = _context.Places.Where(a=>a.Code == plcase.placeCode).FirstOrDefault();
+                    plc = _context.Places.Where(a=>a.Code == plcase.placeCode && a.FatherId == fatherID).FirstOrDefault();
                     return plc == null ? null : plc;
                 }
             }
             return plc;
         }
 
+        private string ChuanhoaDate(string input)
+        {
+            string DateChuan = "";
+            string[] template = input.Split("/");
+            if(template.Count() == 3)
+            {
+                DateChuan = template[1] + "/" + template[0] + "/" + template[2];
+            }
+            return DateChuan;
+        }
+
+        //private string NormalUnicode(string accentedStr)
+        //{
+        //    Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+        //    byte[] tempBytes;
+        //    tempBytes = System.Text.Encoding.GetEncoding("ISO-8859-8").GetBytes(accentedStr);
+        //    string asciiStr = System.Text.Encoding.UTF8.GetString(tempBytes);
+        //    return asciiStr;
+        //}
         private string NormalizeWord(string input)
         {
             string output = input.Trim();

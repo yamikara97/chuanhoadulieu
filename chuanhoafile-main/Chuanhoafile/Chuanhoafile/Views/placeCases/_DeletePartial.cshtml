@@ -1,0 +1,30 @@
+﻿@model Chuanhoafile.Models.placeCase
+
+<div class="modal fade" id="delete-model" tabindex="-1" role="dialog" aria-labelledby="delete-model-label" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Xác nhận xóa trường hợp này</h3>
+            </div>
+            <div class="modal-body form-horizontal">
+                <form asp-action="Delete" enctype="multipart/form-data">
+                    <div class=" col-12 ml-auto mr-auto container">
+                        <div class="row pl-2">
+                            <div class="col-6">
+                                <label asp-for="nameCase" class="control-label">Tên địa điểm</label>
+                                <input readonly asp-for="nameCase" class="form-control" />
+                                <span asp-validation-for="nameCase" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" localize-content>Thoát</button>
+                <button type="button" class="btn btn-danger" data-save="modal" localize-content>Xóa</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@await Html.PartialAsync("_ValidationScriptsPartial")

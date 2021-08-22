@@ -12,5 +12,7 @@ namespace Chuanhoafile.Models
         public string nameCase { get; set; }
         
         public string placeCode { get; set; }
+
+        public string placeFatherCode { get; set; }
     }
 }

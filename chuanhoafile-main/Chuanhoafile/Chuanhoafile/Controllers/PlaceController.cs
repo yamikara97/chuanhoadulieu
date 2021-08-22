@@ -94,7 +94,7 @@ namespace Chuanhoafile.Controllers
         }
 
         [Authorize]
-        public async Task<IActionResult> CreateByFile(Guid? id)
+        public IActionResult  CreateByFile(Guid? id)
         {
             return PartialView("_FileOrderPartial");
         }

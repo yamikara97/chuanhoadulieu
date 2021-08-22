@@ -394,9 +394,6 @@ C:\Users\hieuh\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Ch
 C:\Users\hieuh\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Chuanhoafile\obj\Debug\netcoreapp3.1\Chuanhoafile.csprojAssemblyReference.cache
 C:\Users\hieuh\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Chuanhoafile\obj\Debug\netcoreapp3.1\Chuanhoafile.AssemblyInfoInputs.cache
 C:\Users\hieuh\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Chuanhoafile\obj\Debug\netcoreapp3.1\Chuanhoafile.AssemblyInfo.cs
-C:\Users\hieuh\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Chuanhoafile\obj\Debug\netcoreapp3.1\Chuanhoafile.csproj.CoreCompileInputs.cache
-C:\Users\hieuh\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Chuanhoafile\obj\Debug\netcoreapp3.1\Chuanhoafile.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\hieuh\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Chuanhoafile\obj\Debug\netcoreapp3.1\Chuanhoafile.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\hieuh\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Chuanhoafile\obj\Debug\netcoreapp3.1\Chuanhoafile.RazorAssemblyInfo.cache
 C:\Users\hieuh\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Chuanhoafile\obj\Debug\netcoreapp3.1\Chuanhoafile.RazorAssemblyInfo.cs
 C:\Users\hieuh\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Chuanhoafile\obj\Debug\netcoreapp3.1\Chuanhoafile.TagHelpers.input.cache
@@ -639,3 +636,12 @@ C:\Users\Cheem\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Ch
 C:\Users\Cheem\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Chuanhoafile\obj\Debug\netcoreapp3.1\Razor\Views\placeCases\Index.cshtml.g.cs
 C:\Users\Cheem\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Chuanhoafile\obj\Debug\netcoreapp3.1\Razor\Views\placeCases\_DataTablePartial.cshtml.g.cs
 C:\Users\Cheem\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Chuanhoafile\obj\Debug\netcoreapp3.1\Razor\Views\placeCases\_OrderPartial.cshtml.g.cs
+C:\Users\hieuh\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Chuanhoafile\obj\Debug\netcoreapp3.1\Razor\Views\placeCases\Index.cshtml.g.cs
+C:\Users\hieuh\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Chuanhoafile\obj\Debug\netcoreapp3.1\Razor\Views\placeCases\_DataTablePartial.cshtml.g.cs
+C:\Users\hieuh\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Chuanhoafile\obj\Debug\netcoreapp3.1\Razor\Views\placeCases\_OrderPartial.cshtml.g.cs
+C:\Users\hieuh\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Chuanhoafile\obj\Debug\netcoreapp3.1\Chuanhoafile.csproj.CoreCompileInputs.cache
+C:\Users\hieuh\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Chuanhoafile\obj\Debug\netcoreapp3.1\Chuanhoafile.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\hieuh\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Chuanhoafile\obj\Debug\netcoreapp3.1\Chuanhoafile.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\hieuh\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Chuanhoafile\bin\Debug\netcoreapp3.1\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\hieuh\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Chuanhoafile\obj\Debug\netcoreapp3.1\Razor\Views\placeCases\_FileOrderPartial.cshtml.g.cs
+C:\Users\hieuh\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Chuanhoafile\obj\Debug\netcoreapp3.1\Razor\Views\placeCases\_DeletePartial.cshtml.g.cs
