@@ -20,21 +20,38 @@
                 <input id="input-b9" name="inputb9" data-browse-on-zone-click="true" type="file">
             </div>
             <div class="col-md-5">
-                <label class="control-label font-weight-bold text-primary">Chọn số thứ tự của dòng dữ liệu đầu tiên</label>
-                <select class="form-control" id="rowIndex" name="rowIndex">
-                    @{ for (int i = 1; i < 10; i++)
-                       {
-                           <option value="@i">Dòng @i</option>
-                       } 
-                    }
-                </select>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <label class="control-label font-weight-bold text-primary">Chọn số thứ tự của dòng dữ liệu đầu tiên</label>
+                            <select class="form-control" id="rowIndex" name="rowIndex">
+                                @{ for (int i = 1; i < 10; i++)
+                                    {
+                                        <option value="@i">Dòng @i</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row pt-4">
+                        <div class="col-12">
+                            <label class="control-label font-weight-bold text-primary">Chọn loại dữ liệu đầu ra</label>
+                            <select class="form-control" id="rowTypeFile" name="rowTypeFile">
+                                <option value="DuLieuTiemChung"> TCMR Mẫu 1 - Danh sách đối tượng tiêm - covid </option>
+                                <option value="mau2">TCMR Mẫu 2 - Danh sách lịch sử tiêm - covid </option>
+                                <option value="mau3">HSSK Mẫu 3 - Danh sách đối tượng tiêm - covid</option>
+                                <option value="mau4">HSSK Mẫu 4- Danh sách nhập hồi cứu đối tượng tiêm - covid</option>
+                            </select>
+                            </div>
+                    </div>
+                </div>
                 <hr />
-                <button id="uploadfile" data-save="modal" class="btn btn-success"  >Xử lý | <i class="fas  fa-upload"></i></button>
+                <button id="uploadfile" data-save="modal" class="btn btn-success">Xử lý | <i class="fas  fa-upload"></i></button>
             </div>
         </div>
         <div class="row">
             <div class="modal fade" id="Execute-Modal">
-               @{await Html.RenderPartialAsync("ExecutePartial"); }
+                @{await Html.RenderPartialAsync("ExecutePartial"); }
             </div>
         </div>
     </form>

@@ -202,19 +202,20 @@ namespace Chuanhoafile.Controllers
                             {
                                 if (ws.Cells[rowInd, 1].Value != null && ws.Cells[rowInd, 2].Value != null)
                                 {
-                                    if (!placeCaseExistsName(ws.Cells[rowInd, 1].Value.ToString(),""))
+                                    if (! await placeCaseExistsNameAsync(ws.Cells[rowInd, 1].Value.ToString(),""))
                                     {
                                         var thanhpho = new placeCase();
                                         thanhpho.Id = Guid.NewGuid();
                                         thanhpho.nameCase = ws.Cells[rowInd, 1].Value.ToString();
                                         thanhpho.placeCode = ws.Cells[rowInd, 2].Value.ToString();
+                                        thanhpho.placeFatherCode ="";
                                         await _context.PlaceCases.AddAsync(thanhpho);
                                         await _context.SaveChangesAsync();
                                     }
                                 }
                                 if (ws.Cells[rowInd, 3].Value != null && ws.Cells[rowInd, 4].Value != null && ws.Cells[rowInd, 2].Value != null)
                                 {
-                                    if (!placeCaseExistsName(ws.Cells[rowInd, 3].Value.ToString(), ws.Cells[rowInd, 2].Value.ToString()))
+                                    if (!await placeCaseExistsNameAsync(ws.Cells[rowInd, 3].Value.ToString(), ws.Cells[rowInd, 2].Value.ToString()))
                                     {
                                         var quanhuyen = new placeCase();
                                         quanhuyen.Id = Guid.NewGuid();
@@ -227,7 +228,7 @@ namespace Chuanhoafile.Controllers
                                 }
                                 if (ws.Cells[rowInd, 4].Value != null && ws.Cells[rowInd, 5].Value != null && ws.Cells[rowInd, 6].Value != null)
                                 {
-                                    if (!placeCaseExistsName(ws.Cells[rowInd, 5].Value.ToString(), ws.Cells[rowInd, 4].Value.ToString()))
+                                    if (!await placeCaseExistsNameAsync(ws.Cells[rowInd, 5].Value.ToString(), ws.Cells[rowInd, 4].Value.ToString()))
                                     {
                                         var xaphuong = new placeCase();
                                         xaphuong.Id = Guid.NewGuid();
@@ -248,9 +249,9 @@ namespace Chuanhoafile.Controllers
             return PartialView("_FileOrderPartial");
         }
 
-        private bool placeCaseExistsName(string  name, string code)
+        private async Task<bool> placeCaseExistsNameAsync(string  name, string code)
         {
-            return _context.PlaceCases.Any(e => e.nameCase == name && e.placeFatherCode == code);
+            return await _context.PlaceCases.AnyAsync(e => e.nameCase == name && e.placeFatherCode == code);
         }
 
         private bool placeCaseExists(Guid id)

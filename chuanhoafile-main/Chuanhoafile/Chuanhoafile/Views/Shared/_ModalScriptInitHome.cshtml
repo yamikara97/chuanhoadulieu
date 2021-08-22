@@ -70,6 +70,12 @@
                 },
                 success: function (data1) {
                     $('.loading').css('display', 'none');
+                    if ($("#rowTypeFile :selected").val() == 'mau2') {
+                        $('.mau2').css('display', 'flex');
+                    }
+                    else {
+                        $('.mau2').css('display', 'none');
+                    }
                     if (data1 != null && data1 != "") {
                         $('#Execute-Modal').modal();
                         $('.excl').each(function () {
