@@ -31,7 +31,7 @@
             var dataToSend = new FormData(form.get(0));
 
             $.ajax({
-                url: '@Url.Content("~/Home/FinishExecute")',
+                url: '@Url.Content("~/HSSK/FinishExecute")',
                 type: 'POST',
                 data: dataToSend, processData: false, contentType: false,
                 beforeSend: function () {
@@ -62,7 +62,7 @@
             var actionUrl = form.attr('action');
             var dataToSend = new FormData(form.get(0));
             $.ajax({
-                url: '@Url.Content("~/Home/")' + actionUrl,
+                url: '@Url.Content("~/HSSK/")' + actionUrl,
                 type: 'POST',
                 data: dataToSend, processData: false, contentType: false,
                 beforeSend: function () {
@@ -71,10 +71,10 @@
                 success: function (data1) {
                     $('.loading').css('display', 'none');
                     if ($("#rowTypeFile :selected").val() == 'mau2') {
-                        $('.mau2').css('display', 'flex');
+                        $('.mau4').css('display', 'flex');
                     }
                     else {
-                        $('.mau2').css('display', 'none');
+                        $('.mau4').css('display', 'none');
                     }
                     if (data1 != null && data1 != "") {
                         $('#Execute-Modal').modal();

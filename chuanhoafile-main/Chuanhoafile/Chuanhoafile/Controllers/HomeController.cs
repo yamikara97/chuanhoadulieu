@@ -600,10 +600,17 @@ namespace Chuanhoafile.Controllers
                                 for (int col = start.Column; col <= end.Column; col++)
                                 {
                                     var excl = new ExcelObject();
-                                    excl.colIndex = col;
-                                    excl.name = ws.Cells[rowIndex, col].Text;
+                                  
                                     if (ws.Cells[rowIndex, col].Text != null && ws.Cells[rowIndex, col].Text != "")
                                     {
+                                        excl.colIndex = col;
+                                        excl.name = ws.Cells[rowIndex, col].Text;
+                                        result.Add(excl);
+                                    }
+                                    if (ws.Cells[rowIndex, col].Text == null || ws.Cells[rowIndex, col].Text == "")
+                                    {
+                                        excl.colIndex = col;
+                                        excl.name = "Cột: " + col.ToString();
                                         result.Add(excl);
                                     }
                                 }

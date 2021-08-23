@@ -3,7 +3,7 @@
 
 }
 <div class="container action-begins">
-   
+
     <div class="bg-danger error">
         <i class="fas fa-close"></i>
         <span class="p-3 text-white" id="error"></span>
@@ -18,7 +18,7 @@
         <div class="container-fluid">
             <ul class="breadcrumb">
                 <li class="breadcrumb-item"><a>Trang chủ</a></li>
-                <li class="breadcrumb-item"><a href="#">Tiêm chủng mở rộng</a></li>
+                <li class="breadcrumb-item"><a href="#">Hồ sơ sức khỏe  </a></li>
             </ul>
         </div>
         <div class="row">
@@ -44,10 +44,10 @@
                         <div class="col-12">
                             <label class="control-label font-weight-bold text-primary">Chọn loại dữ liệu đầu ra</label>
                             <select class="form-control" id="rowTypeFile" name="rowTypeFile">
-                                <option value="DuLieuTiemChung"> TCMR Mẫu 1 - Danh sách đối tượng tiêm - covid </option>
-                                <option value="mau2">TCMR Mẫu 2 - Danh sách lịch sử tiêm - covid </option>
+                                <option value="mau3">HSSK Mẫu 3 - Danh sách đối tượng tiêm - covid</option>
+                                <option value="mau4">HSSK Mẫu 4- Danh sách nhập hồi cứu đối tượng tiêm - covid</option>
                             </select>
-                            </div>
+                        </div>
                     </div>
                 </div>
                 <hr />
@@ -63,5 +63,5 @@
 </div>
 @section Scripts
 {
-    @{await Html.RenderPartialAsync("_ModalScriptInitHome");}
+    @{await Html.RenderPartialAsync("_ModalScriptInitHSSK");}
 }
