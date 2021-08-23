@@ -140,14 +140,14 @@ namespace Chuanhoafile.Controllers
                                     if (ws.Cells[rowInd, ngaythangnamsinh].Value == null || ws.Cells[rowInd, ngaythangnamsinh].Value.ToString() == "")
                                     {
                                         errorlist += "Thiếu Ngày tháng năm sinh; ";
-                                        resultWorkSheet.Cells[resultRowIndex, 3].Value = "";
+                                        resultWorkSheet.Cells[resultRowIndex, 4].Value = "";
                                     }
                                     else
                                     {
                                         DateTime date;
                                         if (DateTime.TryParse(ws.Cells[rowInd, ngaythangnamsinh].Value.ToString(), out date))
                                         {
-                                            resultWorkSheet.Cells[resultRowIndex, 3].Value = date.ToString("dd/MM/yyyy");
+                                            resultWorkSheet.Cells[resultRowIndex, 4].Value = date.ToString("yyyyMMdd");
                                         }
                                         else
                                         {
@@ -155,12 +155,12 @@ namespace Chuanhoafile.Controllers
                                             DateTime datefinal;
                                             if (DateTime.TryParse(date2, out datefinal))
                                             {
-                                                resultWorkSheet.Cells[resultRowIndex, 3].Value = datefinal.Year.ToString("YYYY") + datefinal.Month.ToString("MM") + datefinal.Day.ToString("dd");
+                                                resultWorkSheet.Cells[resultRowIndex, 4].Value =  datefinal.ToString("yyyyMMdd");
                                             }
                                             else
                                             {
                                                 errorlist += "Ngày tháng năm sinh sai định dạng; ";
-                                                resultWorkSheet.Cells[resultRowIndex, 3].Value = "";
+                                                resultWorkSheet.Cells[resultRowIndex, 4].Value = "";
                                             }
                                         }
                                     }
@@ -290,7 +290,7 @@ namespace Chuanhoafile.Controllers
                                     }
                                     else
                                     {
-                                        resultWorkSheet.Cells[resultRowIndex, 12].Value = ws.Cells[rowInd, donvi].Value.ToString();
+                                        resultWorkSheet.Cells[resultRowIndex, 12].Value = ws.Cells[rowInd, dantoc].Value.ToString();
 
                                     }
                                     //////// col 12
@@ -302,7 +302,7 @@ namespace Chuanhoafile.Controllers
                                     }
                                     else
                                     {
-                                        resultWorkSheet.Cells[resultRowIndex, 13].Value = ws.Cells[rowInd, donvi].Value.ToString();
+                                        resultWorkSheet.Cells[resultRowIndex, 13].Value = ws.Cells[rowInd, quoctich].Value.ToString();
 
                                     }
                                     //////// col 13
@@ -452,7 +452,7 @@ namespace Chuanhoafile.Controllers
                                             DateTime date;
                                             if (DateTime.TryParse(ws.Cells[rowInd, ngaytiem1].Value.ToString(), out date))
                                             {
-                                                resultWorkSheet.Cells[resultRowIndex, 24].Value = getdatehssk(date);
+                                                resultWorkSheet.Cells[resultRowIndex, 24].Value =  date.Hour == 0 ? date.ToString("yyyyMMdd") + " 09:00" : date.ToString("yyyyMMdd HH:ss");
                                             }
                                             else
                                             {
@@ -460,7 +460,7 @@ namespace Chuanhoafile.Controllers
                                                 DateTime datefinal;
                                                 if (DateTime.TryParse(date2, out datefinal))
                                                 {
-                                                    resultWorkSheet.Cells[resultRowIndex, 24].Value = getdatehssk(datefinal);
+                                                    resultWorkSheet.Cells[resultRowIndex, 24].Value = datefinal.Hour == 0 ? datefinal.ToString("yyyyMMdd") + " 09:00" : datefinal.ToString("yyyyMMdd HH:ss");
                                                 }
                                                 else
                                                 {
@@ -506,7 +506,7 @@ namespace Chuanhoafile.Controllers
                                             DateTime date;
                                             if (DateTime.TryParse(ws.Cells[rowInd, ngaytiem2].Value.ToString(), out date))
                                             {
-                                                resultWorkSheet.Cells[resultRowIndex, 27].Value = getdatehssk(date);
+                                                resultWorkSheet.Cells[resultRowIndex, 27].Value = date.Hour == 0 ? date.ToString("yyyyMMdd") + " 09:00" : date.ToString("yyyyMMdd HH:ss");
                                             }
                                             else
                                             {
@@ -514,7 +514,7 @@ namespace Chuanhoafile.Controllers
                                                 DateTime datefinal;
                                                 if (DateTime.TryParse(date2, out datefinal))
                                                 {
-                                                    resultWorkSheet.Cells[resultRowIndex, 27].Value = getdatehssk(datefinal);
+                                                    resultWorkSheet.Cells[resultRowIndex, 27].Value = datefinal.Hour == 0 ? datefinal.ToString("yyyyMMdd") + " 09:00" : datefinal.ToString("yyyyMMdd HH:ss");
                                                 }
                                                 else
                                                 {
