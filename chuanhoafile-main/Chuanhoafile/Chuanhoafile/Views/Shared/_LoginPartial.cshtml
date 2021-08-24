@@ -33,3 +33,26 @@
         </li>
     }
 </ul>
+
+<button class="open-button btn" onclick="openForm()">Gửi phản hồi</button>
+
+<div class="chat-popup" id="myForm">
+    <form action="/" class="form-container">
+        <label for="msg"><b>Tên người gửi</b></label>
+        <input class="form-control" type="text" name="name" value="" />
+        <label for="msg"><b>Nội dung</b></label>
+        <textarea placeholder="Type message.." name="msg" required></textarea>
+        <button type="submit" class="btn">Gửi</button>
+        <button type="button" class="btn cancel" onclick="closeForm()">Thoát</button>
+    </form>
+    <script>
+
+        function openForm() {
+            document.getElementById("myForm").style.display = "block";
+        }
+
+        function closeForm() {
+            document.getElementById("myForm").style.display = "none";
+        }
+    </script>
+</div>

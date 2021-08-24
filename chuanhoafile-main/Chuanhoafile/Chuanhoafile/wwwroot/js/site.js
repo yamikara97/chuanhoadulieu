@@ -4,6 +4,7 @@
 // Write your JavaScript code.
 $(document).ready(function () {
 
+
     $('.table-data').DataTable().destroy();
 
     $('.table-data').DataTable({
