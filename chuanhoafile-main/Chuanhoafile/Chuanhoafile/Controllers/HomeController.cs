@@ -49,8 +49,8 @@ namespace Chuanhoafile.Controllers
         [HttpPost]
         public async Task<IActionResult> FinishExecute(IFormCollection collect, IFormFile inputb9)
         {
-            //try
-            //{
+            try
+            {
                 int hoten = int.Parse(collect["hoten"]);
                 int gioitinh = int.Parse(collect["gioitinh"]);
                 int manhom = int.Parse(collect["manhom"]);
@@ -71,21 +71,20 @@ namespace Chuanhoafile.Controllers
                     if (inputb9.Length > 0)
                     {
                         var filePath = Path.Combine(_env.WebRootPath, "File", collect["rowTypeFile"] + ".xlsx");
+                        var filePathDes = Path.Combine(_env.WebRootPath, "File", collect["rowTypeFile"] + ".xlsx");
                         pathFile = filePath;
                         using (var stream = inputb9.OpenReadStream())
                         {
                             using (ExcelPackage excelPack = new ExcelPackage())
                             {
-                                using (ExcelPackage resultSheet = new ExcelPackage())
+                                string file_name = Guid.NewGuid().ToString().Substring(1, 19) + "_DuLieuTiemChung.xlsx";
+                                string filePathreturn = Path.Combine(_env.WebRootPath, "File", file_name);
+                                var fileinfo = new FileInfo(filePathreturn);
+                                System.IO.File.Copy(filePath, filePathreturn);
+                                using (ExcelPackage resultSheet = new ExcelPackage(fileinfo))
                                 {
-                                    //try
-                                    //{
-                                        using (FileStream fs = System.IO.File.Open(filePath, FileMode.Open))
-                                        {
-                                            ExcelPackage templateSheet = new ExcelPackage();
-                                            await templateSheet.LoadAsync(fs);
-                                            resultSheet.Workbook.Worksheets.Add("PL1_Danh sách đối tượng tiêm", CopySheet(templateSheet.Workbook, "PL1_Danh sách đối tượng tiêm", "sheet1"));
-                                        }
+                                    try
+                                    {
                                         excelPack.Load(stream);
                                         var ws = excelPack.Workbook.Worksheets[0];
                                         var start = ws.Dimension.Start;
@@ -531,28 +530,25 @@ namespace Chuanhoafile.Controllers
                                             resultRowIndex++;
                                             count++;
                                         }
-                                        string file_name = Guid.NewGuid().ToString().Substring(1, 19) + "_DuLieuTiemChung.xlsx";
-                                        filePath = Path.Combine(_env.WebRootPath, "File", file_name);
-
-                                        FileInfo fi = new FileInfo(filePath);
+                                        //FileInfo fi = new FileInfo(filePathreturn);
                                         //var result = await resultSheet.GetAsByteArrayAsync();
-                                        await resultSheet.SaveAsAsync(fi);                                    //return File(result, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet","File_da_xu_ly");
+                                        resultSheet.Save();                                    //return File(result, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet","File_da_xu_ly");
                                         return Json(new { status = "success", message = file_name });
-                                    //}
-                                    //catch (Exception ex)
-                                    //{
-                                    //    return Json(new { status = "error", message = ex.Message });
-                                    //}
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        return Json(new { status = "error", message = ex.Message });
+                                    }
                                 }
                             }
                         }
                     }
                 }
-            //}
-            //catch (Exception ex)
-            //{
-            //    return Json(new { status = "error", message = ex.Message + "----" + collect["dinhdangngaysinh"].ToString() });
-            //}
+            }
+            catch (Exception ex)
+            {
+                return Json(new { status = "error", message = ex.Message + "----" + collect["dinhdangngaysinh"].ToString() });
+            }
             return Json(new { status = "error", message = "Hệ thống không thể xử lý" });
         }
 
@@ -688,6 +684,25 @@ namespace Chuanhoafile.Controllers
             }
 
             return output;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Sendchat(IFormCollection collect)
+        {
+            try
+            {
+                var chat = new Recomment();
+                chat.Author = collect["name"];
+                chat.Content = collect["msg"];
+                chat.Id = Guid.NewGuid();
+                await _context.Recomments.AddAsync(chat);
+                await _context.SaveChangesAsync();
+                return Json(new { status = "success", message = "Đã gửi" });
+            }
+            catch (Exception e)
+            {
+                return Json(new { status = "error", message = e.Message });
+            }
         }
     }
 }

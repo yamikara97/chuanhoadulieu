@@ -19,5 +19,7 @@ namespace Chuanhoafile.Data
         public DbSet<places> Places { get; set; }
 
         public DbSet<placeCase> PlaceCases { get; set; }
+
+        public DbSet<Recomment> Recomments { get; set; }
     }
 }

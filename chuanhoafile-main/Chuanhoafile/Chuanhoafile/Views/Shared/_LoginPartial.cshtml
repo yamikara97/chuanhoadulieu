@@ -37,16 +37,15 @@
 <button class="open-button btn" onclick="openForm()">Gửi phản hồi</button>
 
 <div class="chat-popup" id="myForm">
-    <form action="/" class="form-container">
+    <form action="" id="chat-form" class="form-container">
         <label for="msg"><b>Tên người gửi</b></label>
-        <input class="form-control" type="text" name="name" value="" />
+        <input class="form-control input-chat" type="text" name="name" required value="" />
         <label for="msg"><b>Nội dung</b></label>
-        <textarea placeholder="Type message.." name="msg" required></textarea>
-        <button type="submit" class="btn">Gửi</button>
+        <textarea placeholder="nhập nội dung.."  class="form-control input-chat" name="msg" required></textarea>
+        <button type="submit" class="btn"  id="sendChat">Gửi</button>
         <button type="button" class="btn cancel" onclick="closeForm()">Thoát</button>
     </form>
     <script>
-
         function openForm() {
             document.getElementById("myForm").style.display = "block";
         }
@@ -54,5 +53,46 @@
         function closeForm() {
             document.getElementById("myForm").style.display = "none";
         }
+
+        $(document).ready(function () {
+            $('#sendChat').on('click', function (e) {
+                e.preventDefault();
+                var form = $(this).parents('.chat-popup').find('form');
+                var dataToSend = new FormData(form.get(0));
+                $.ajax({
+                url: '@Url.Content("~/Home/Sendchat")',
+                type: 'POST',
+                data: dataToSend, processData: false, contentType: false,
+                beforeSend: function () {
+                    $('.loading').css('display', 'block');
+                },
+                success: function (data1) {
+                    $('.loading').css('display', 'none');
+                    if (data1 != null && data1 != "") {
+                        if (data1.status == "error") {
+                            $('.error').fadeIn();;
+                            $('#error').html(data1.message);
+                            setTimeout(function () { $('.error').fadeOut(); }, 7000);
+                        }
+                        else {
+                            document.getElementById("chat-form").reset();
+                            $('.success').fadeIn();
+                            $('#success').html(data1.message);
+                            setTimeout(function () { $('.success').fadeOut(); }, 2000);
+                        }
+                    }
+                },
+                    false: function (data1) {
+                        document.getElementById("chat-form").reset();
+                    $('.loading').css('display', 'none');
+                    $('.error').show(2500);
+                    $('#error').html(data1.message);
+                    setTimeout(function () { $('.error').css("display", "none"); }, 7000);
+                }
+            });
+            });
+        });
+
+
     </script>
 </div>
