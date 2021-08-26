@@ -165,7 +165,6 @@ namespace Chuanhoafile.Controllers
                                             //////// col 4
                                             if (ws.Cells[rowInd, email].Value == null || ws.Cells[rowInd, email].Value.ToString() == "")
                                             {
-                                                errorlist += "Thiếu Email; ";
                                                 resultWorkSheet.Cells[resultRowIndex, 5].Value = "";
                                             }
                                             else

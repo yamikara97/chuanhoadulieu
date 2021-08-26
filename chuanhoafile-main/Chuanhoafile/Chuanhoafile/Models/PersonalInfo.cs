@@ -16,5 +16,9 @@ namespace Chuanhoafile.Models
         public string Gender { get; set; }
 
         public DateTime DateofBirth { get; set; }
+
+        public string Workplace { get; set; }
+
+        public string PersonID { get; set; }
     }
 }
