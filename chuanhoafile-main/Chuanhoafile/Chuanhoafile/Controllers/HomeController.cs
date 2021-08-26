@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using OfficeOpenXml;
@@ -638,17 +639,17 @@ namespace Chuanhoafile.Controllers
                 return null;
             }
             
-            plc = _context.Places.Where(a => a.NameOutput.ToLower().Contains(NormalizeWord(wrongName)) == true && a.FatherId == fatherID).FirstOrDefault();
+            plc = _context.Places.Where(a => a.NameOutput.ToLower().Contains(NormalizeWord(wrongName)) == true && a.FatherId == fatherID).AsNoTracking().FirstOrDefault();
             if(plc != null)
             {
                 return plc;
             }
             else
             {
-                var plcase = _context.PlaceCases.Where(a => a.nameCase == NormalizeWord(wrongName)).FirstOrDefault();
+                var plcase = _context.PlaceCases.Where(a => a.nameCase == NormalizeWord(wrongName)).AsNoTracking().FirstOrDefault();
                 if (plcase != null)
                 {
-                    plc = _context.Places.Where(a=>a.Code == plcase.placeCode && a.FatherId == fatherID).FirstOrDefault();
+                    plc = _context.Places.Where(a=>a.Code == plcase.placeCode && a.FatherId == fatherID).AsNoTracking().FirstOrDefault();
                     return plc == null ? null : plc;
                 }
             }
