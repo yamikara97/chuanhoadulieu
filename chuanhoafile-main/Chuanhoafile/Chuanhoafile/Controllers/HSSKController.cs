@@ -127,6 +127,10 @@ namespace Chuanhoafile.Controllers
                                                 {
                                                     resultWorkSheet.Cells[resultRowIndex, 3].Value = 2;
                                                 }
+                                                else if (int.Parse(ws.Cells[rowInd, gioitinh].Value.ToString()) == 1 || int.Parse(ws.Cells[rowInd, gioitinh].Value.ToString()) == 0 || int.Parse(ws.Cells[rowInd, gioitinh].Value.ToString()) == 2)
+                                                {
+                                                    resultWorkSheet.Cells[resultRowIndex, 4].Value = ws.Cells[rowInd, gioitinh].Value.ToString();
+                                                }
                                                 else
                                                 {
                                                     errorlist += "Sai định dạng giới tính; ";
@@ -234,6 +238,11 @@ namespace Chuanhoafile.Controllers
                                                 {
                                                     resultWorkSheet.Cells[resultRowIndex, 9].Value = "0" + phonenum;
                                                 }
+                                                else if (phonenum.Length == 10 && phonenum[0] == '1' && phonenum[1] == '6')
+                                                {
+                                                    phonenum = phonenum.Substring(2);
+                                                    resultWorkSheet.Cells[resultRowIndex, 7].Value = "03" + phonenum;
+                                                }
                                                 else
                                                 {
                                                     errorlist += "Số điện thoại " + phonenum + " không hợp lệ; ";
@@ -250,6 +259,7 @@ namespace Chuanhoafile.Controllers
                                             else
                                             {
                                                 string cmndS = ws.Cells[rowInd, cmnd].Value.ToString().Replace(" ", "").Replace(".", "").Replace("-", "").Replace(" ", "").Trim();
+                                                cmndS = getCorrectCMND(cmndS);
                                                 if (cmndS.Length == 8 || cmndS.Length == 9 || cmndS.Length == 12)
                                                 {
                                                     resultWorkSheet.Cells[resultRowIndex, 10].Value = cmndS;
@@ -421,10 +431,8 @@ namespace Chuanhoafile.Controllers
                                                 int vacxin2 = int.Parse(collect["vacxin2"]);
                                                 int ngaytiem1 = int.Parse(collect["ngaytiem1"]);
                                                 int lovacxin1 = int.Parse(collect["lovacxin1"]);
-                                                int diadiemtiem1 = int.Parse(collect["diadiemtiem1"]);
                                                 int ngaytiem2 = int.Parse(collect["ngaytiem2"]);
                                                 int lovacxin2 = int.Parse(collect["lovacxin2"]);
-                                                int diadiemtiem2 = int.Parse(collect["diadiemtiem2"]);
 
 
                                                 if (ws.Cells[rowInd, vacxin1].Value == null || ws.Cells[rowInd, vacxin1].Value.ToString() == "")
@@ -529,7 +537,7 @@ namespace Chuanhoafile.Controllers
                                                 }
                                                 else
                                                 {
-                                                    resultWorkSheet.Cells[resultRowIndex, 28].Value = ws.Cells[rowInd, lovacxin1].Value.ToString();
+                                                    resultWorkSheet.Cells[resultRowIndex, 28].Value = ws.Cells[rowInd, lovacxin2].Value.ToString();
 
                                                 }
                                                 //////// col lovacxin 2
@@ -563,7 +571,19 @@ namespace Chuanhoafile.Controllers
         }
 
 
-
+        private string getCorrectCMND(string input)
+        {
+            string output = input;
+            if (input[0] == '3' && input[1] == '1')
+            {
+                output = "0" + input;
+            }
+            if (input[0] == '3' && input[1] == '0')
+            {
+                output = "0" + input;
+            }
+            return output;
+        }
 
 
         [HttpGet]
@@ -610,13 +630,13 @@ namespace Chuanhoafile.Controllers
                                     if (ws.Cells[rowIndex, col].Text != null && ws.Cells[rowIndex, col].Text != "")
                                     {
                                         excl.colIndex = col;
-                                        excl.name = ws.Cells[rowIndex, col].Text;
+                                        excl.name = ws.Cells[rowIndex, col].Text + " (Cột: " + OfficeOpenXml.ExcelCellAddress.GetColumnLetter(col) + ")";
                                         result.Add(excl);
                                     }
                                     if (ws.Cells[rowIndex, col].Text == null || ws.Cells[rowIndex, col].Text == "")
                                     {
                                         excl.colIndex = col;
-                                        excl.name = "Cột: " + col.ToString();
+                                        excl.name = "Cột: " + OfficeOpenXml.ExcelCellAddress.GetColumnLetter(col);
                                         result.Add(excl);
                                     }
                                 }

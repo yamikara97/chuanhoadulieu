@@ -191,7 +191,6 @@ C:\Users\hieuh\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Ch
 C:\Users\hieuh\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Chuanhoafile\obj\Release\netcoreapp3.1\Razor\Views\Home\Privacy.cshtml.g.cs
 C:\Users\hieuh\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Chuanhoafile\obj\Release\netcoreapp3.1\Razor\Views\HSSK\ExecutePartial.cshtml.g.cs
 C:\Users\hieuh\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Chuanhoafile\obj\Release\netcoreapp3.1\Razor\Views\HSSK\Index.cshtml.g.cs
-C:\Users\hieuh\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Chuanhoafile\obj\Release\netcoreapp3.1\Razor\Views\HSSK\_Layout.cshtml.g.cs
 C:\Users\hieuh\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Chuanhoafile\obj\Release\netcoreapp3.1\Razor\Views\placeCases\Index.cshtml.g.cs
 C:\Users\hieuh\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Chuanhoafile\obj\Release\netcoreapp3.1\Razor\Views\placeCases\_DataTablePartial.cshtml.g.cs
 C:\Users\hieuh\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Chuanhoafile\obj\Release\netcoreapp3.1\Razor\Views\placeCases\_DeletePartial.cshtml.g.cs

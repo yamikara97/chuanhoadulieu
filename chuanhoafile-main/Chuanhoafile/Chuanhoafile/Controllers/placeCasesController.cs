@@ -51,7 +51,7 @@ namespace Chuanhoafile.Controllers
         public async Task<IActionResult> Index()
         {
 
-            var locationList = await _context.PlaceCases.ToListAsync();
+            var locationList = await _context.PlaceCases.AsNoTracking().Take(100).ToListAsync();
             if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
             {
                 return PartialView("_DataTablePartial", locationList);

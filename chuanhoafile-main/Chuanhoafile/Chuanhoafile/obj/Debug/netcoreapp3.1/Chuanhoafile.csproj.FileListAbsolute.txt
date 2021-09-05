@@ -646,7 +646,6 @@ C:\Users\Cheem\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Ch
 C:\Users\Cheem\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Chuanhoafile\obj\Debug\netcoreapp3.1\Razor\Views\placeCases\_FileOrderPartial.cshtml.g.cs
 C:\Users\hieuh\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Chuanhoafile\obj\Debug\netcoreapp3.1\Razor\Views\HSSK\Index.cshtml.g.cs
 C:\Users\hieuh\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Chuanhoafile\obj\Debug\netcoreapp3.1\Razor\Views\HSSK\ExecutePartial.cshtml.g.cs
-C:\Users\hieuh\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Chuanhoafile\obj\Debug\netcoreapp3.1\Razor\Views\HSSK\_Layout.cshtml.g.cs
 C:\Users\hieuh\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Chuanhoafile\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_ModalScriptInitHSSK.cshtml.g.cs
 C:\Users\Cheem\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Chuanhoafile\obj\Debug\netcoreapp3.1\Razor\Views\HSSK\ExecutePartial.cshtml.g.cs
 C:\Users\Cheem\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Chuanhoafile\obj\Debug\netcoreapp3.1\Razor\Views\HSSK\Index.cshtml.g.cs
