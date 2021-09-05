@@ -50,8 +50,8 @@ namespace Chuanhoafile.Controllers
         [HttpPost]
         public async Task<IActionResult> FinishExecute(IFormCollection collect, IFormFile inputb9)
         {
-            try
-            {
+            //try
+            //{
                 int hoten = int.Parse(collect["hoten"]);
                 int gioitinh = int.Parse(collect["gioitinh"]);
                 int manhom = int.Parse(collect["manhom"]);
@@ -84,8 +84,8 @@ namespace Chuanhoafile.Controllers
                                 System.IO.File.Copy(filePath, filePathreturn);
                                 using (ExcelPackage resultSheet = new ExcelPackage(fileinfo))
                                 {
-                                    try
-                                    {
+                                    //try
+                                    //{
                                         excelPack.Load(stream);
                                         var ws = excelPack.Workbook.Worksheets[0];
                                         var start = ws.Dimension.Start;
@@ -153,20 +153,23 @@ namespace Chuanhoafile.Controllers
                                                 {
                                                     resultWorkSheet.Cells[resultRowIndex, 4].Value = 0;
                                                 }
-                                                else if (ws.Cells[rowInd, gioitinh].Value.ToString().Trim().ToLower() == "nữ" || ws.Cells[rowInd, gioitinh].Value.ToString().Trim().ToLower().Contains("nu"))
+                                                else if (ws.Cells[rowInd, gioitinh].Value.ToString().Trim().ToLower() == "nữ" || ws.Cells[rowInd, gioitinh].Value.ToString().Trim().ToLower().Contains("nu") || ws.Cells[rowInd, gioitinh].Value.ToString().Trim().ToLower().Contains("nũ"))
                                                 {
                                                     resultWorkSheet.Cells[resultRowIndex, 4].Value = 1;
                                                 }
-                                                else if (int.Parse(ws.Cells[rowInd, gioitinh].Value.ToString())  == 1 || int.Parse(ws.Cells[rowInd, gioitinh].Value.ToString()) == 0 || int.Parse(ws.Cells[rowInd, gioitinh].Value.ToString()) == 2)
+                                                else 
                                                 {
-                                                    resultWorkSheet.Cells[resultRowIndex, 4].Value = ws.Cells[rowInd, gioitinh].Value.ToString();
+                                                    int nNumber = int.TryParse(ws.Cells[rowInd, gioitinh].Value.ToString(), out nNumber) ? nNumber : -1;
+                                                    if (nNumber != -1)
+                                                    {
+                                                        resultWorkSheet.Cells[resultRowIndex, 4].Value = ws.Cells[rowInd, gioitinh].Value.ToString();
+                                                    }
+                                                    else
+                                                    {
+                                                        errorlist += "Sai định dạng giới tính; ";
+                                                        resultWorkSheet.Cells[resultRowIndex, 4].Value = "";
+                                                    }
                                                 }
-                                                else
-                                                {
-                                                    errorlist += "Sai định dạng giới tính; ";
-                                                    resultWorkSheet.Cells[resultRowIndex, 4].Value = "";
-                                                }
-
                                             }
                                             //////// col 4
 
@@ -376,138 +379,155 @@ namespace Chuanhoafile.Controllers
                                                 int lovacxin2 = int.Parse(collect["lovacxin2"]);
                                                 int diadiemtiem2 = int.Parse(collect["diadiemtiem2"]);
 
-
-                                                if (ws.Cells[rowInd, vacxin1].Value == null || ws.Cells[rowInd, vacxin1].Value.ToString() == "")
+                                                if ((ws.Cells[rowInd, vacxin1].Value == null || ws.Cells[rowInd, vacxin1].Value.ToString() == "") && (ws.Cells[rowInd, ngaytiem1].Value == null || ws.Cells[rowInd, ngaytiem1].Value.ToString() == "") && (ws.Cells[rowInd, lovacxin1].Value == null || ws.Cells[rowInd, lovacxin1].Value.ToString() == "") && (ws.Cells[rowInd, diadiemtiem1].Value == null || ws.Cells[rowInd, diadiemtiem1].Value.ToString() == ""))
                                                 {
-                                                    errorlist += "Thiếu tên vắc xin 1; ";
-                                                    resultWorkSheet.Cells[resultRowIndex, 17].Value = "";
+
                                                 }
                                                 else
                                                 {
-                                                    resultWorkSheet.Cells[resultRowIndex, 17].Value = ws.Cells[rowInd, vacxin1].Value.ToString();
-
-                                                }
-                                                //////// col vacxin1
-                                                ///
-
-                                                if (ws.Cells[rowInd, ngaytiem1].Value == null || ws.Cells[rowInd, ngaytiem1].Value.ToString() == "")
-                                                {
-                                                    errorlist += "Thiếu Ngày tháng tiêm mũi 1; ";
-                                                    resultWorkSheet.Cells[resultRowIndex, 18].Value = "";
-                                                }
-                                                else
-                                                {
-                                                    DateTime date;
-                                                    if (DateTime.TryParse(ws.Cells[rowInd, ngaytiem1].Value.ToString(), out date))
+                                                    if (ws.Cells[rowInd, vacxin1].Value == null || ws.Cells[rowInd, vacxin1].Value.ToString() == "")
                                                     {
-                                                        resultWorkSheet.Cells[resultRowIndex, 18].Value = date.ToString("dd/MM/yyyy");
+                                                        errorlist += "Thiếu tên vắc xin 1; ";
+                                                        resultWorkSheet.Cells[resultRowIndex, 17].Value = "";
                                                     }
                                                     else
                                                     {
-                                                        string date2 = ChuanhoaDate(ws.Cells[rowInd, ngaytiem1].Value.ToString());
-                                                        DateTime datefinal;
-                                                        if (DateTime.TryParse(date2, out datefinal))
-                                                        {
-                                                            resultWorkSheet.Cells[resultRowIndex, 18].Value = datefinal.ToString("dd/MM/yyyy");
-                                                        }
-                                                        else
-                                                        {
-                                                            errorlist += "Ngày tháng tiêm mũi 1 sai định dạng; ";
-                                                            resultWorkSheet.Cells[resultRowIndex, 18].Value = "";
-                                                        }
+                                                        resultWorkSheet.Cells[resultRowIndex, 17].Value = ws.Cells[rowInd, vacxin1].Value.ToString();
+
                                                     }
-                                                }
-                                                //////// col ngày tiêm 1
-                                                if (ws.Cells[rowInd, lovacxin1].Value == null || ws.Cells[rowInd, lovacxin1].Value.ToString() == "")
-                                                {
-                                                    errorlist += "Thiếu tên lô vắc xin 1; ";
-                                                    resultWorkSheet.Cells[resultRowIndex, 19].Value = "";
-                                                }
-                                                else
-                                                {
-                                                    resultWorkSheet.Cells[resultRowIndex, 19].Value = ws.Cells[rowInd, lovacxin1].Value.ToString();
+                                                    //////// col vacxin1
+                                                    ///
 
-                                                }
-                                                //////// col lovacxin1
-                                                ///
-                                                if (ws.Cells[rowInd, diadiemtiem1].Value == null || ws.Cells[rowInd, diadiemtiem1].Value.ToString() == "")
-                                                {
-                                                    errorlist += "Thiếu địa điểm tiêm mũi 1; ";
-                                                    resultWorkSheet.Cells[resultRowIndex, 20].Value = "";
-                                                }
-                                                else
-                                                {
-                                                    resultWorkSheet.Cells[resultRowIndex, 20].Value = ws.Cells[rowInd, diadiemtiem1].Value.ToString();
-
-                                                }
-                                                //////// col địa điểm tiêm mũi 1
-                                                ///
-
-                                                if (ws.Cells[rowInd, vacxin2].Value == null || ws.Cells[rowInd, vacxin2].Value.ToString() == "")
-                                                {
-                                                    errorlist += "Thiếu tên vắc xin 21; ";
-                                                    resultWorkSheet.Cells[resultRowIndex, 21].Value = "";
-                                                }
-                                                else
-                                                {
-                                                    resultWorkSheet.Cells[resultRowIndex, 21].Value = ws.Cells[rowInd, vacxin2].Value.ToString();
-
-                                                }
-                                                //////// col vacxin 2
-                                                ///
-
-                                                if (ws.Cells[rowInd, ngaytiem2].Value == null || ws.Cells[rowInd, ngaytiem2].Value.ToString() == "")
-                                                {
-                                                    errorlist += "Thiếu Ngày tháng tiêm mũi 2; ";
-                                                    resultWorkSheet.Cells[resultRowIndex, 22].Value = "";
-                                                }
-                                                else
-                                                {
-                                                    DateTime date;
-                                                    if (DateTime.TryParse(ws.Cells[rowInd, ngaytiem2].Value.ToString(), out date))
+                                                    if (ws.Cells[rowInd, ngaytiem1].Value == null || ws.Cells[rowInd, ngaytiem1].Value.ToString() == "")
                                                     {
-                                                        resultWorkSheet.Cells[resultRowIndex, 22].Value = date.ToString("dd/MM/yyyy");
+                                                        errorlist += "Thiếu Ngày tháng tiêm mũi 1; ";
+                                                        resultWorkSheet.Cells[resultRowIndex, 18].Value = "";
                                                     }
                                                     else
                                                     {
-                                                        string date2 = ChuanhoaDate(ws.Cells[rowInd, ngaytiem2].Value.ToString());
-                                                        DateTime datefinal;
-                                                        if (DateTime.TryParse(date2, out datefinal))
+                                                        DateTime date;
+                                                        if (DateTime.TryParse(ws.Cells[rowInd, ngaytiem1].Value.ToString(), out date))
                                                         {
-                                                            resultWorkSheet.Cells[resultRowIndex, 22].Value = datefinal.ToString("dd/MM/yyyy");
+                                                            resultWorkSheet.Cells[resultRowIndex, 18].Value = date.ToString("dd/MM/yyyy");
                                                         }
                                                         else
                                                         {
-                                                            errorlist += "Ngày tháng tiêm mũi 2 sai định dạng; ";
-                                                            resultWorkSheet.Cells[resultRowIndex, 22].Value = "";
+                                                            string date2 = ChuanhoaDate(ws.Cells[rowInd, ngaytiem1].Value.ToString());
+                                                            DateTime datefinal;
+                                                            if (DateTime.TryParse(date2, out datefinal))
+                                                            {
+                                                                resultWorkSheet.Cells[resultRowIndex, 18].Value = datefinal.ToString("dd/MM/yyyy");
+                                                            }
+                                                            else
+                                                            {
+                                                                errorlist += "Ngày tháng tiêm mũi 1 sai định dạng; ";
+                                                                resultWorkSheet.Cells[resultRowIndex, 18].Value = "";
+                                                            }
                                                         }
                                                     }
+                                                    //////// col ngày tiêm 1
+                                                    if (ws.Cells[rowInd, lovacxin1].Value == null || ws.Cells[rowInd, lovacxin1].Value.ToString() == "")
+                                                    {
+                                                        errorlist += "Thiếu tên lô vắc xin 1; ";
+                                                        resultWorkSheet.Cells[resultRowIndex, 19].Value = "";
+                                                    }
+                                                    else
+                                                    {
+                                                        resultWorkSheet.Cells[resultRowIndex, 19].Value = ws.Cells[rowInd, lovacxin1].Value.ToString();
+
+                                                    }
+                                                    //////// col lovacxin1
+                                                    ///
+                                                    if (ws.Cells[rowInd, diadiemtiem1].Value == null || ws.Cells[rowInd, diadiemtiem1].Value.ToString() == "")
+                                                    {
+                                                        errorlist += "Thiếu địa điểm tiêm mũi 1; ";
+                                                        resultWorkSheet.Cells[resultRowIndex, 20].Value = "";
+                                                    }
+                                                    else
+                                                    {
+                                                        resultWorkSheet.Cells[resultRowIndex, 20].Value = ws.Cells[rowInd, diadiemtiem1].Value.ToString();
+
+                                                    }
+                                                    //////// col địa điểm tiêm mũi 1
+                                                    ///
                                                 }
-                                                //////// col ngày tiêm 2
-                                                if (ws.Cells[rowInd, lovacxin2].Value == null || ws.Cells[rowInd, lovacxin2].Value.ToString() == "")
-                                                {
-                                                    errorlist += "Thiếu tên lô vắc xin 2; ";
-                                                    resultWorkSheet.Cells[resultRowIndex, 23].Value = "";
+
+                                                if ((ws.Cells[rowInd, vacxin2].Value == null || ws.Cells[rowInd, vacxin2].Value.ToString() == "") && (ws.Cells[rowInd, ngaytiem2].Value == null || ws.Cells[rowInd, ngaytiem2].Value.ToString() == "") && (ws.Cells[rowInd, lovacxin2].Value == null || ws.Cells[rowInd, lovacxin2].Value.ToString() == "") && (ws.Cells[rowInd, diadiemtiem2].Value == null || ws.Cells[rowInd, diadiemtiem2].Value.ToString() == ""))
+                                                { 
+                                                
                                                 }
                                                 else
                                                 {
-                                                    resultWorkSheet.Cells[resultRowIndex, 23].Value = ws.Cells[rowInd, lovacxin2].Value.ToString();
+                                                    if (ws.Cells[rowInd, vacxin2].Value == null || ws.Cells[rowInd, vacxin2].Value.ToString() == "")
+                                                    {
+                                                        errorlist += "Thiếu tên vắc xin 21; ";
+                                                        resultWorkSheet.Cells[resultRowIndex, 21].Value = "";
+                                                    }
+                                                    else
+                                                    {
+                                                        resultWorkSheet.Cells[resultRowIndex, 21].Value = ws.Cells[rowInd, vacxin2].Value.ToString();
 
-                                                }
-                                                //////// col lovacxin 2
-                                                ///
-                                                if (ws.Cells[rowInd, diadiemtiem2].Value == null || ws.Cells[rowInd, diadiemtiem2].Value.ToString() == "")
-                                                {
-                                                    errorlist += "Thiếu địa điểm tiêm mũi 2; ";
-                                                    resultWorkSheet.Cells[resultRowIndex, 24].Value = "";
-                                                }
-                                                else
-                                                {
-                                                    resultWorkSheet.Cells[resultRowIndex, 24].Value = ws.Cells[rowInd, diadiemtiem2].Value.ToString();
+                                                    }
+                                                    //////// col vacxin 2
+                                                    ///
 
+                                                    if (ws.Cells[rowInd, ngaytiem2].Value == null || ws.Cells[rowInd, ngaytiem2].Value.ToString() == "")
+                                                    {
+                                                        errorlist += "Thiếu Ngày tháng tiêm mũi 2; ";
+                                                        resultWorkSheet.Cells[resultRowIndex, 22].Value = "";
+                                                    }
+                                                    else
+                                                    {
+                                                        DateTime date;
+                                                        if (DateTime.TryParse(ws.Cells[rowInd, ngaytiem2].Value.ToString(), out date))
+                                                        {
+                                                            resultWorkSheet.Cells[resultRowIndex, 22].Value = date.ToString("dd/MM/yyyy");
+                                                        }
+                                                        else
+                                                        {
+                                                            string date2 = ChuanhoaDate(ws.Cells[rowInd, ngaytiem2].Value.ToString());
+                                                            DateTime datefinal;
+                                                            if (DateTime.TryParse(date2, out datefinal))
+                                                            {
+                                                                resultWorkSheet.Cells[resultRowIndex, 22].Value = datefinal.ToString("dd/MM/yyyy");
+                                                            }
+                                                            else
+                                                            {
+                                                                errorlist += "Ngày tháng tiêm mũi 2 sai định dạng; ";
+                                                                resultWorkSheet.Cells[resultRowIndex, 22].Value = "";
+                                                            }
+                                                        }
+                                                    }
+                                                    //////// col ngày tiêm 2
+                                                    if (ws.Cells[rowInd, lovacxin2].Value == null || ws.Cells[rowInd, lovacxin2].Value.ToString() == "")
+                                                    {
+                                                        errorlist += "Thiếu tên lô vắc xin 2; ";
+                                                        resultWorkSheet.Cells[resultRowIndex, 23].Value = "";
+                                                    }
+                                                    else
+                                                    {
+                                                        resultWorkSheet.Cells[resultRowIndex, 23].Value = ws.Cells[rowInd, lovacxin2].Value.ToString();
+
+                                                    }
+                                                    //////// col lovacxin 2
+                                                    ///
+                                                    if (ws.Cells[rowInd, diadiemtiem2].Value == null || ws.Cells[rowInd, diadiemtiem2].Value.ToString() == "")
+                                                    {
+                                                        errorlist += "Thiếu địa điểm tiêm mũi 2; ";
+                                                        resultWorkSheet.Cells[resultRowIndex, 24].Value = "";
+                                                    }
+                                                    else
+                                                    {
+                                                        resultWorkSheet.Cells[resultRowIndex, 24].Value = ws.Cells[rowInd, diadiemtiem2].Value.ToString();
+
+                                                    }
+                                                    //////// col địa điểm tiêm mũi 2
+                                                    ///
                                                 }
-                                                //////// col địa điểm tiêm mũi 2
-                                                ///
+
+
+
+
 
                                                 resultWorkSheet.Cells[resultRowIndex, 26].Value = errorlist;
                                             }
@@ -526,21 +546,21 @@ namespace Chuanhoafile.Controllers
                                         //var result = await resultSheet.GetAsByteArrayAsync();
                                         resultSheet.Save();                                    //return File(result, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet","File_da_xu_ly");
                                         return Json(new { status = "success", message = file_name });
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        return Json(new { status = "error", message = ex.Message });
-                                    }
+                                    //}
+                                    //catch (Exception ex)
+                                    //{
+                                    //    return Json(new { status = "error", message = ex.Message });
+                                    //}
                                 }
                             }
                         }
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                return Json(new { status = "error", message = ex.Message + "----" + collect["dinhdangngaysinh"].ToString() });
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    return Json(new { status = "error", message = ex.Message + "----" + collect["dinhdangngaysinh"].ToString() });
+            //}
             return Json(new { status = "error", message = "Hệ thống không thể xử lý" });
         }
 

@@ -127,14 +127,18 @@ namespace Chuanhoafile.Controllers
                                                 {
                                                     resultWorkSheet.Cells[resultRowIndex, 3].Value = 2;
                                                 }
-                                                else if (int.Parse(ws.Cells[rowInd, gioitinh].Value.ToString()) == 1 || int.Parse(ws.Cells[rowInd, gioitinh].Value.ToString()) == 0 || int.Parse(ws.Cells[rowInd, gioitinh].Value.ToString()) == 2)
-                                                {
-                                                    resultWorkSheet.Cells[resultRowIndex, 4].Value = ws.Cells[rowInd, gioitinh].Value.ToString();
-                                                }
                                                 else
                                                 {
-                                                    errorlist += "Sai định dạng giới tính; ";
-                                                    resultWorkSheet.Cells[resultRowIndex, 3].Value = "";
+                                                    int nNumber = int.TryParse(ws.Cells[rowInd, gioitinh].Value.ToString(), out nNumber) ? nNumber : -1;
+                                                    if (nNumber != -1)
+                                                    {
+                                                        resultWorkSheet.Cells[resultRowIndex, 3].Value = ws.Cells[rowInd, gioitinh].Value.ToString();
+                                                    }
+                                                    else
+                                                    {
+                                                        errorlist += "Sai định dạng giới tính; ";
+                                                        resultWorkSheet.Cells[resultRowIndex, 4].Value = "";
+                                                    }
                                                 }
 
                                             }
