@@ -50,8 +50,8 @@ namespace Chuanhoafile.Controllers
         [HttpPost]
         public async Task<IActionResult> FinishExecute(IFormCollection collect, IFormFile inputb9)
         {
-            //try
-            //{
+            try
+            {
                 int hoten = int.Parse(collect["hoten"]);
                 int gioitinh = int.Parse(collect["gioitinh"]);
                 int manhom = int.Parse(collect["manhom"]);
@@ -84,8 +84,8 @@ namespace Chuanhoafile.Controllers
                                 System.IO.File.Copy(filePath, filePathreturn);
                                 using (ExcelPackage resultSheet = new ExcelPackage(fileinfo))
                                 {
-                                    //try
-                                    //{
+                                    try
+                                    {
                                         excelPack.Load(stream);
                                         var ws = excelPack.Workbook.Worksheets[0];
                                         var start = ws.Dimension.Start;
@@ -120,18 +120,19 @@ namespace Chuanhoafile.Controllers
                                             else
                                             {
                                                 DateTime date;
-                                                if (DateTime.TryParse(ws.Cells[rowInd, ngaythangnamsinh].Value.ToString(), out date))
+                                                if (DateTime.TryParse(ws.Cells[rowInd, ngaythangnamsinh].Text, out date))
                                                 {
                                                     resultWorkSheet.Cells[resultRowIndex, 3].Value = date.ToString("dd/MM/yyyy");
                                                 }
                                                 else
                                                 {
-                                                    string date2 = ChuanhoaDate(ws.Cells[rowInd, ngaythangnamsinh].Value.ToString());
+                                                    string date2 = ChuanhoaDate(ws.Cells[rowInd, ngaythangnamsinh].Text);
                                                     DateTime datefinal;
                                                     if (DateTime.TryParse(date2, out datefinal))
                                                     {
-                                                        resultWorkSheet.Cells[resultRowIndex, 3].Value = datefinal.ToString("dd/MM/yyyy");
+                                                        resultWorkSheet.Cells[resultRowIndex, 3].Value = datefinal.ToString("dd/MM/yyyy") ;
                                                     }
+                                                    //resultWorkSheet.Cells[resultRowIndex, 3].Value = date2;
                                                     else
                                                     {
                                                         errorlist += "Ngày tháng năm sinh sai định dạng; ";
@@ -546,22 +547,22 @@ namespace Chuanhoafile.Controllers
                                         //var result = await resultSheet.GetAsByteArrayAsync();
                                         resultSheet.Save();                                    //return File(result, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet","File_da_xu_ly");
                                         return Json(new { status = "success", message = file_name });
-                                    //}
-                                    //catch (Exception ex)
-                                    //{
-                                    //    return Json(new { status = "error", message = ex.Message });
-                                    //}
-                                }
+                            }
+                                    catch (Exception ex)
+                            {
+                                return Json(new { status = "error", message = ex.Message });
+                            }
+                        }
                             }
                         }
                     }
                 }
-            //}
-            //catch (Exception ex)
-            //{
-            //    return Json(new { status = "error", message = ex.Message + "----" + collect["dinhdangngaysinh"].ToString() });
-            //}
-            return Json(new { status = "error", message = "Hệ thống không thể xử lý" });
+        }
+            catch (Exception ex)
+            {
+                return Json(new { status = "error", message = ex.Message + "----" + collect["dinhdangngaysinh"].ToString() });
+            }
+return Json(new { status = "error", message = "Hệ thống không thể xử lý" });
         }
 
         private string getCorrectCMND(string input)
@@ -683,9 +684,17 @@ namespace Chuanhoafile.Controllers
         {
             string DateChuan = "";
             string[] template = input.Split("/");
-            if(template.Count() == 3)
+            if (int.Parse(template[1]) <= 12 && int.Parse(template[2]) > 12)
             {
-                DateChuan = template[1] + "/" + template[0] + "/" + template[2];
+                DateChuan = int.Parse(template[1]).ToString("D2") + "/" + int.Parse(template[0]).ToString("D2") + "/" + int.Parse(template[2]).ToString("D4");
+            }
+            else if (int.Parse(template[2]) <= 12 && int.Parse(template[1]) > 12)
+            {
+                DateChuan = int.Parse(template[2]).ToString("D2") + "/" + int.Parse(template[1]).ToString("D2") + "/" + int.Parse(template[2]).ToString("D4");
+            }
+            else 
+            {
+                DateChuan = int.Parse(template[1]).ToString("D2") + "/" + int.Parse(template[2]).ToString("D2") + "/" + int.Parse(template[2]).ToString("D4");
             }
             return DateChuan;
         }
