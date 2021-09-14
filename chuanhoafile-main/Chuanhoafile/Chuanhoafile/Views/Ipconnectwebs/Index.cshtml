@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Chuanhoafile.Models.Ipconnectweb>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="container-fluid">
+
+    <div class="card shadow mt-3">
+        <div class="row">
+            <div class="col-12">
+                <ul class="breadcrumb bg-white font-weight-bold" style="margin: unset !important">
+                    <li class="breadcrumb-item">
+                        <a asp-area="" asp-controller="Home" asp-action="Index">Trang chủ</a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <a>Danh sách truy cập gần đây</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div id="modal-placeholder"></div>
+</div>
+<div class="card shadow m-4">
+    <div class="card-body">
+        <div class="table-responsive">
+            @await Html.PartialAsync("_DataTablePartial.cshtml", Model)
+
+        </div>
+    </div>
+</div>
+<hr />
+@section Scripts
+{
+    @{await Html.RenderPartialAsync("_ModalScriptInit", "placescase");}
+}
+
+
+<script>
+
+</script>

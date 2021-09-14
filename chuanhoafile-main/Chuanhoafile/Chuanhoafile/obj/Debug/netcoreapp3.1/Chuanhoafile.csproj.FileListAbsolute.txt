@@ -664,3 +664,17 @@ C:\Users\Cheem\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Ch
 C:\Users\Cheem\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Chuanhoafile\obj\Debug\netcoreapp3.1\Razor\Views\Recomments\Index.cshtml.g.cs
 C:\Users\Cheem\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Chuanhoafile\obj\Debug\netcoreapp3.1\Razor\Views\Recomments\_DataTablePartial.cshtml.g.cs
 C:\Users\Cheem\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Chuanhoafile\obj\Debug\netcoreapp3.1\Razor\Views\Recomments\_OrderPartial.cshtml.g.cs
+C:\Users\Cheem\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Chuanhoafile\obj\Debug\netcoreapp3.1\Razor\Views\Ipconnectwebs\Create.cshtml.g.cs
+C:\Users\Cheem\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Chuanhoafile\obj\Debug\netcoreapp3.1\Razor\Views\Ipconnectwebs\Delete.cshtml.g.cs
+C:\Users\Cheem\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Chuanhoafile\obj\Debug\netcoreapp3.1\Razor\Views\Ipconnectwebs\Details.cshtml.g.cs
+C:\Users\Cheem\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Chuanhoafile\obj\Debug\netcoreapp3.1\Razor\Views\Ipconnectwebs\Edit.cshtml.g.cs
+C:\Users\Cheem\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Chuanhoafile\obj\Debug\netcoreapp3.1\Razor\Views\Ipconnectwebs\Index.cshtml.g.cs
+C:\Users\Cheem\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Chuanhoafile\obj\Debug\netcoreapp3.1\Razor\Views\Ipconnectwebs\_DataTablePartial.cshtml.g.cs
+C:\Users\Cheem\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Chuanhoafile\bin\Debug\netcoreapp3.1\Aspose.Cells.dll
+C:\Users\Cheem\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Chuanhoafile\bin\Debug\netcoreapp3.1\NPOI.OOXML.dll
+C:\Users\Cheem\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Chuanhoafile\bin\Debug\netcoreapp3.1\NPOI.OpenXml4Net.dll
+C:\Users\Cheem\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Chuanhoafile\bin\Debug\netcoreapp3.1\NPOI.OpenXmlFormats.dll
+C:\Users\Cheem\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Chuanhoafile\bin\Debug\netcoreapp3.1\NPOI.dll
+C:\Users\Cheem\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Chuanhoafile\bin\Debug\netcoreapp3.1\BouncyCastle.Crypto.dll
+C:\Users\Cheem\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Chuanhoafile\bin\Debug\netcoreapp3.1\ICSharpCode.SharpZipLib.dll
+C:\Users\Cheem\Documents\GitHub\chuanhoadulieu\chuanhoafile-main\Chuanhoafile\Chuanhoafile\bin\Debug\netcoreapp3.1\NOTICE.TXT

@@ -5,6 +5,16 @@
 }
 <script type="text/javascript">
     $(document).ready(function () {
+        $.ajax({
+                url: '@Url.Content("~/Home/realtimegetip")',
+                type: 'POST',
+                success: function (data1) {
+                   
+                },
+                false: function (data1) {
+                   
+                }
+            });
         $('#Execute-Modal').on('hidden.bs.modal', function () {
             $(".excl").empty();
         })
@@ -22,7 +32,7 @@
             language: "vi",
             dropZoneEnabled: true,
             rtl: true,
-            allowedFileExtensions: ["xls", "xlsx"]
+            allowedFileExtensions: ["xlsx"]
             //uploadUrl: '/site/file-upload-single'
         });
         $('#finishBtn').on('click', function (e) {

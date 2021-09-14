@@ -231,7 +231,7 @@ namespace Chuanhoafile.Controllers
                                                 errorlist += "Thiếu số điện thoại; ";
                                                 resultWorkSheet.Cells[resultRowIndex, 9].Value = "";
                                             }
-                                            else
+                                            else if (ws.Cells[rowInd, sodienthoai].Value.ToString().Length > 8)
                                             {
                                                 string phonenum = ws.Cells[rowInd, sodienthoai].Value.ToString().Replace("+", "").Replace(" ", "").Replace(".", "").Replace("-", "").Replace(" ", "").Trim();
                                                 while (phonenum[0] == '0')
@@ -710,13 +710,20 @@ namespace Chuanhoafile.Controllers
         {
             string DateChuan = "";
             string[] template = input.Split("/");
-            if (template.Count() == 3)
+            if (int.Parse(template[1]) <= 12 && int.Parse(template[2]) > 12)
             {
-                DateChuan = template[1] + "/" + template[0] + "/" + template[2];
+                DateChuan = int.Parse(template[1]).ToString("D2") + "/" + int.Parse(template[0]).ToString("D2") + "/" + int.Parse(template[2]).ToString("D4");
+            }
+            else if (int.Parse(template[2]) <= 12 && int.Parse(template[1]) > 12)
+            {
+                DateChuan = int.Parse(template[2]).ToString("D2") + "/" + int.Parse(template[1]).ToString("D2") + "/" + int.Parse(template[2]).ToString("D4");
+            }
+            else
+            {
+                DateChuan = int.Parse(template[1]).ToString("D2") + "/" + int.Parse(template[2]).ToString("D2") + "/" + int.Parse(template[2]).ToString("D4");
             }
             return DateChuan;
         }
-
         private string getdatehssk(DateTime date)
         {
             string result = "";
@@ -738,6 +745,13 @@ namespace Chuanhoafile.Controllers
             }
 
             return output;
+        }
+
+        public async Task<IActionResult> OnGetAsync()
+        {
+            // Retrieve client IP address through HttpContext.Connection
+          var   ClientIPAddr = HttpContext.Connection.RemoteIpAddress?.ToString();
+            return Json(ClientIPAddr) ;
         }
     }
 }

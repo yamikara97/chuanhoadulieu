@@ -22,7 +22,7 @@
             language: "vi",
             dropZoneEnabled: true,
             rtl: true,
-            allowedFileExtensions: ["xls", "xlsx"]
+            allowedFileExtensions: ["xlsx"]
             //uploadUrl: '/site/file-upload-single'
         });
         $('#finishBtn').on('click', function (e) {
@@ -109,6 +109,7 @@
                 },
                 false: function (data1) {
                     $('.loading').css('display', 'none');
+
                     alert(JSON.stringify(data1));
                 }
             });

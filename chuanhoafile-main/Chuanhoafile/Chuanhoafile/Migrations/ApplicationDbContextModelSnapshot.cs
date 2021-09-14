@@ -97,6 +97,26 @@ namespace Chuanhoafile.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("Chuanhoafile.Models.Ipconnectweb", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("DateUpdate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ip")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Ipconnectwebs");
+                });
+
             modelBuilder.Entity("Chuanhoafile.Models.Recomment", b =>
                 {
                     b.Property<Guid>("Id")

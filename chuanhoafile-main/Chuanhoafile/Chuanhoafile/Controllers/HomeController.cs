@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using NPOI.HSSF.UserModel;
 using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
@@ -72,8 +73,6 @@ namespace Chuanhoafile.Controllers
                     if (inputb9.Length > 0)
                     {
                         var filePath = Path.Combine(_env.WebRootPath, "File", collect["rowTypeFile"] + ".xlsx");
-                        var filePathDes = Path.Combine(_env.WebRootPath, "File", collect["rowTypeFile"] + ".xlsx");
-                        pathFile = filePath;
                         using (var stream = inputb9.OpenReadStream())
                         {
                             using (ExcelPackage excelPack = new ExcelPackage())
@@ -84,9 +83,9 @@ namespace Chuanhoafile.Controllers
                                 System.IO.File.Copy(filePath, filePathreturn);
                                 using (ExcelPackage resultSheet = new ExcelPackage(fileinfo))
                                 {
-                                    try
-                                    {
-                                        excelPack.Load(stream);
+                                try
+                                {
+                                    excelPack.Load(stream);
                                         var ws = excelPack.Workbook.Worksheets[0];
                                         var start = ws.Dimension.Start;
                                         var end = ws.Dimension.End;
@@ -211,7 +210,7 @@ namespace Chuanhoafile.Controllers
                                                 errorlist += "Thiếu số điện thoại; ";
                                                 resultWorkSheet.Cells[resultRowIndex, 7].Value = "";
                                             }
-                                            else
+                                            else if(ws.Cells[rowInd, sodienthoai].Value.ToString().Length > 8)
                                             {
                                                 string phonenum = ws.Cells[rowInd, sodienthoai].Value.ToString().Replace("+", "").Replace(" ", "").Replace(".", "").Replace("-", "").Replace(" ", "").Trim();
                                                 while (phonenum[0] == '0')
@@ -525,11 +524,6 @@ namespace Chuanhoafile.Controllers
                                                     //////// col địa điểm tiêm mũi 2
                                                     ///
                                                 }
-
-
-
-
-
                                                 resultWorkSheet.Cells[resultRowIndex, 26].Value = errorlist;
                                             }
                                             if (filePath.Contains("mau3"))
@@ -546,6 +540,8 @@ namespace Chuanhoafile.Controllers
                                         //FileInfo fi = new FileInfo(filePathreturn);
                                         //var result = await resultSheet.GetAsByteArrayAsync();
                                         resultSheet.Save();                                    //return File(result, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet","File_da_xu_ly");
+                                        HSSFWorkbook wb = new HSSFWorkbook(stream);
+                                        wb.Write();
                                         return Json(new { status = "success", message = file_name });
                             }
                                     catch (Exception ex)
@@ -557,7 +553,7 @@ namespace Chuanhoafile.Controllers
                         }
                     }
                 }
-        }
+    }
             catch (Exception ex)
             {
                 return Json(new { status = "error", message = ex.Message + "----" + collect["dinhdangngaysinh"].ToString() });
@@ -587,7 +583,8 @@ return Json(new { status = "error", message = "Hệ thống không thể xử l�
             string fullPath = Path.Combine(_env.WebRootPath, "File", file_name);
             byte[] fileBytes = await System.IO.File.ReadAllBytesAsync(fullPath);
             System.IO.File.Delete(fullPath);
-            return File(fileBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", file_name);
+
+            return File(fileBytes, "application/vnd.ms-excel", file_name.Replace("xlsx","xls"));
         }
         public ExcelWorksheet CopySheet(ExcelWorkbook workbook, string existingWorksheetName, string newWorksheetName)
         {
@@ -684,19 +681,42 @@ return Json(new { status = "error", message = "Hệ thống không thể xử l�
         {
             string DateChuan = "";
             string[] template = input.Split("/");
-            if (int.Parse(template[1]) <= 12 && int.Parse(template[2]) > 12)
+            if(template.Count() >= 3)
             {
-                DateChuan = int.Parse(template[1]).ToString("D2") + "/" + int.Parse(template[0]).ToString("D2") + "/" + int.Parse(template[2]).ToString("D4");
+                int date1, date2;
+                if (int.TryParse(template[1],out date1) && int.TryParse(template[2], out date2)) {
+                    if (int.Parse(template[1]) <= 12 && int.Parse(template[2]) > 12)
+                    {
+                        DateChuan = int.Parse(template[1]).ToString("D2") + "/" + int.Parse(template[0]).ToString("D2") + "/" + int.Parse(template[2]).ToString("D4");
+                    }
+                    else if (int.Parse(template[2]) <= 12 && int.Parse(template[1]) > 12)
+                    {
+                        DateChuan = int.Parse(template[2]).ToString("D2") + "/" + int.Parse(template[1]).ToString("D2") + "/" + int.Parse(template[2]).ToString("D4");
+                    }
+                    else
+                    {
+                        DateChuan = int.Parse(template[1]).ToString("D2") + "/" + int.Parse(template[2]).ToString("D2") + "/" + int.Parse(template[2]).ToString("D4");
+                    }
+
+                }
+                
             }
-            else if (int.Parse(template[2]) <= 12 && int.Parse(template[1]) > 12)
-            {
-                DateChuan = int.Parse(template[2]).ToString("D2") + "/" + int.Parse(template[1]).ToString("D2") + "/" + int.Parse(template[2]).ToString("D4");
-            }
-            else 
-            {
-                DateChuan = int.Parse(template[1]).ToString("D2") + "/" + int.Parse(template[2]).ToString("D2") + "/" + int.Parse(template[2]).ToString("D4");
-            }
+            
             return DateChuan;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> realtimegetip()
+        {
+            // Retrieve client IP address through HttpContext.Connection
+            var ClientIPAddr = HttpContext.Connection.RemoteIpAddress?.ToString();
+            var ipget = new Ipconnectweb();
+            ipget.Id = Guid.NewGuid();
+            ipget.ip = ClientIPAddr;
+            ipget.DateUpdate = DateTime.Now;
+            _context.Add(ipget);
+            await _context.SaveChangesAsync();
+            return Json(ClientIPAddr);
         }
 
         //private string NormalUnicode(string accentedStr)
